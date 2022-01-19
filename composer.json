@@ -1,0 +1,21 @@
+{
+    "name": "raydragneel/herauth-lib",
+    "description": "Autentikasi user dan client",
+    "type": "library",
+    "require": {
+        "php": "^7.3 || ^8.0",
+        "firebase/php-jwt": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Raydragneel\\HerauthLib\\": "src/"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "heraya",
+            "email": "herayafpm@gmail.com"
+        }
+    ]
+}
