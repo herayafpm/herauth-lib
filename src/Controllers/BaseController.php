@@ -78,7 +78,7 @@ class BaseController extends Controller
     public function view($view,$data = [])
     {
         $data = array_merge($this->data,$data);
-        return view($this->root_view.$view,$data);
+        return view($this->root_view.$view,$data,['cache' => 3600, 'cache_name' => str_replace('/','_',$this->root_view.$view)]);
     }
 
     protected function validate($rules, array $messages = []): bool
