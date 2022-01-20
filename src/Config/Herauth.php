@@ -15,4 +15,6 @@ class Herauth extends BaseConfig
 
     public $privatePath = APPPATH . "../keys/private.pem";
     public $publicPath = APPPATH . "../keys/public.pem";
+    public $redirectLogin = 'login';
+    public $redirectMain = '';
 }

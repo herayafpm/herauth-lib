@@ -8,12 +8,13 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Psr\Log\LoggerInterface;
+use Raydragneel\HerauthLib\Models\AdminModel;
 
 class BaseResourceApi extends ResourceController
 {
     protected $data;
     protected $validator;
-    protected $_user = null;
+    protected $__user = null;
     protected $session = null;
     protected $jenis_akses = 'web';
     protected $helpers = ['herauth_main'];
@@ -26,8 +27,18 @@ class BaseResourceApi extends ResourceController
         }
         $this->jenis_akses = $request->uri->getSegments()[$segment];
         $request->jenis_akses = $this->jenis_akses;
+        $admin_model = model(AdminModel::class);
         if ($this->jenis_akses === 'web') {
             $this->session = session();
+            if($this->session->has('username')){
+                $_user = $admin_model->cekUser($request->username);
+                $this->__user = $_user;
+            }
+        }else{
+            if($request->username ?? '' !== ''){
+                $_user = $admin_model->cekUser($request->username);
+                $this->__user = $_user;
+            }
         }
     }
     protected function validate($rules, array $messages = []): bool

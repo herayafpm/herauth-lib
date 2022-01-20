@@ -6,6 +6,8 @@ use Raydragneel\HerauthLib\Filters\ApiFilter;
 
 use CodeIgniter\Config\BaseConfig;
 use Raydragneel\HerauthLib\Filters\AfterRequestFilter;
+use Raydragneel\HerauthLib\Filters\AuthApiFilter;
+use Raydragneel\HerauthLib\Filters\AuthFilter;
 
 class HerauthFilters extends BaseConfig
 {
@@ -17,7 +19,12 @@ class HerauthFilters extends BaseConfig
      */
     public $aliases = [
         'api_filter' => ApiFilter::class,
-        'after_request_filter' => AfterRequestFilter::class
+        'after_request_filter' => AfterRequestFilter::class,
+        'auth_filter' => AuthFilter::class,
+        'auth_api_filter' => [
+            ApiFilter::class,
+            AuthApiFilter::class,
+        ],
     ];
 
     /**

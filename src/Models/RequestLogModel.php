@@ -11,7 +11,7 @@ class RequestLogModel extends BaseModel
     protected $returnType           = 'array';
     protected $useSoftDeletes       = true;
     protected $protectFields        = true;
-    protected $allowedFields        = ['nama', 'username', 'path', 'method', 'ip', 'user_agent', 'status_code', 'status_message'];
+    protected $allowedFields        = ['client', 'username', 'path', 'method', 'ip', 'user_agent', 'status_code', 'status_message'];
 
     // Dates
     protected $useTimestamps        = true;

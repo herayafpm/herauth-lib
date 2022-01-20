@@ -2,8 +2,8 @@
 
 namespace Raydragneel\HerauthLib\Models;
 
-use Raydragneel\HerauthLib\Entities\ClientEntity;
 use CodeIgniter\Model;
+use Raydragneel\HerauthLib\Entities\ClientWhitelistEntity;
 
 class ClientWhitelistModel extends Model
 {
@@ -11,7 +11,7 @@ class ClientWhitelistModel extends Model
     protected $primaryKey           = 'id';
     protected $useAutoIncrement     = true;
     protected $insertID             = 0;
-    protected $returnType           = ClientEntity::class;
+    protected $returnType           = ClientWhitelistEntity::class;
     protected $useSoftDeletes        = true;
     protected $protectFields        = true;
     protected $allowedFields        = ['client_id', 'whitelist_name','whitelist_type', 'whitelist_key', 'deleted_at'];

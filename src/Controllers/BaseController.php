@@ -10,6 +10,8 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Psr\Log\LoggerInterface;
+use Raydragneel\HerauthLib\Models\AdminModel;
+
 // Require app/Common.php file if exists.
 if (is_file(__DIR__ . '/../Common.php')) {
     require_once __DIR__ . '/../Common.php';
@@ -47,32 +49,36 @@ class BaseController extends Controller
      * Constructor.
      */
     protected $data = [];
+    protected $root_view = '';
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
         $this->data['__app_name'] = 'Herauth';
+        $this->data['_main_path'] = $this->root_view;
         // $locale = $this->request->getLocale();
         // $this->data['__locale'] = $locale;
-        // $this->session = session();
-        // $this->data['session'] = $this->session;
+        $this->session = session();
+        $this->data['session'] = $this->session;
+        $url = current_url();
+        $this->data['url'] = $url;
         // $this->data['_uri'] = implode('/',$request->uri->getSegments());
         // $this->data['_web_url'] = str_replace($request->uri->getScheme()."://",'',base_url());
 
-        // if($this->session->has('username')){
-        //     $user_model = model(UsersModel::class);
-        //     $user = $user_model->cekUser($this->session->get('username'));
-        //     $this->_user = $user;
-        //     $this->data['_user'] = $user;
-        // }
+        if($this->session->has('username')){
+            $admin_model = model(AdminModel::class);
+            $user = $admin_model->cekUser($this->session->get('username'));
+            $this->_user = $user;
+            $this->data['_user'] = $user;
+        }
 
     }
 
     public function view($view,$data = [])
     {
         $data = array_merge($this->data,$data);
-        return view($view,$data);
+        return view($this->root_view.$view,$data);
     }
 
     protected function validate($rules, array $messages = []): bool

@@ -130,4 +130,39 @@ class ClientEntity extends Entity
             throw new DomainException(lang("Client.whitelist.unauthorized"));
         }
     }
+
+    public function getClientEncodeText()
+    {
+        $request = service('request');
+        $agent = $request->getUserAgent();
+        $where = ['client_id' => $this->attributes['id'],'whitelist_type' => null,'whitelist_key' => null];
+        if($agent->isMobile()){
+            if ($agent->isMobile('android')) {
+                if($request->hasHeader('android-key')){
+                    $androidKey = $request->getHeader('android-key')->getValue() ?? '';
+                    if(!empty($androidKey)){
+                        $where['whitelist_type'] = 'android';
+                        $where['whitelist_key'] = $androidKey;
+                    }
+                }
+            } else if ($agent->isMobile('iphone')) {
+                if($request->hasHeader('ios-key')){
+                    $iosKey = $request->getHeader('ios-key')->getValue() ?? '';
+                    if(!empty($iosKey)){
+                        $where['whitelist_type'] = 'ios';
+                        $where['whitelist_key'] = $iosKey;
+                    }
+                }
+            }
+        }else{
+            $where['whitelist_type'] = 'ip';
+            $where['whitelist_key'] = $request->getIPAddress();
+        }
+
+        $whitelist = $this->client_whitelist_model->where($where)->first();
+        if (!empty($whitelist)) {
+            return $this->attributes['nama']." " .$whitelist->whitelist_name;
+        }
+        return null;
+    }
 }

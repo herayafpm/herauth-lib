@@ -11,6 +11,7 @@ class RequestLog extends Migration
 		$this->forge->addField([
 			'id'               => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
 			'username'            => ['type' => 'varchar', 'constraint' => 255, 'null' => true],
+			'client'      => ['type' => 'text', 'null' => true],
 			'path'            => ['type' => 'varchar', 'constraint' => 255],
 			'method'            => ['type' => 'varchar', 'constraint' => 255],
 			'ip'            => ['type' => 'varchar', 'constraint' => 255],
