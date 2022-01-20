@@ -3,6 +3,7 @@
 namespace Raydragneel\HerauthLib\Controllers\Api;
 
 use Raydragneel\HerauthLib\Entities\AdminEntity;
+use Raydragneel\HerauthLib\Libraries\ClaJWT;
 use Raydragneel\HerauthLib\Models\AdminModel;
 
 class Auth extends BaseResourceApi
@@ -52,17 +53,21 @@ class Auth extends BaseResourceApi
         $username = $admin_entity->username;
         $message = $this->model->getMessage();
         if ($login_success) {
+            $data_res = [];
             if ($this->jenis_akses === 'web') {
-                $ses['jenis'] = 'admin';
                 $ses['username'] = $username;
                 $ses['nama'] = $login_success->nama;
                 $this->session->set($ses);
+                $data_res['redir'] = herauth_base_url("");
+            } else if ($this->jenis_akses === 'api') {
+                $jwt = ClaJWT::encode(['username' => $username], null, false, false);
+                if($jwt){
+                    $data_res = $jwt;
+                }
             }
-            return $this->respond(["status" => true, "message" => $message, "data" => [
-                'redir' => herauth_base_url("")
-            ]],200);
+            return $this->respond(["status" => true, "message" => $message, "data" => $data_res], 200);
         } else {
-            return $this->respond(["status" => false, "message" => $message, "data" => []],400);
+            return $this->respond(["status" => false, "message" => $message, "data" => []], 400);
         }
     }
 }

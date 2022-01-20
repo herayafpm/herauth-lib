@@ -10,5 +10,7 @@ class InitSeeder extends Seeder
 	{
 		$this->call(GroupSeeder::class);
 		$this->call(AdminSeeder::class);
+		$this->call(ClientSeeder::class);
+		$this->call(PermissionSeeder::class);
 	}
 }

@@ -18,7 +18,7 @@ class AfterRequestFilter implements FilterInterface
     {
         $request_log_model = model(RequestLogModel::class);
         $ipAddress = $request->getIPAddress();
-        $userAgent = $request->getUserAgent();
+        $userAgent = $request->getUserAgent()->getAgentString() ?? '';
         $path = $request->uri->getPath();
         $method = $request->getMethod();
         $username = null;
@@ -28,8 +28,13 @@ class AfterRequestFilter implements FilterInterface
         }else{
             $message = $response->getReason();
         }
-        if (property_exists($request, 'user')) {
-            $username = $request->user->username;
+        if (!empty($request->jenis_akses)) {
+            if($request->jenis_akses === 'web'){
+                $session = service('session');
+                if($session->has('username')){
+                    $username = $session->get('username');
+                }
+            }
         }
         $request_log_model->save([
             'username'            => $username,

@@ -108,8 +108,7 @@
           formData.append('password', this.password);
 
           await axios.post("<?= herauth_web_url('auth/login') ?>", formData, {
-            validateStatus: () => true
-          }).then((res) => {
+            validateStatus: () => true}).then((res) => {
             if (res.status !== 200) {
               this.alertType = 'danger'
               this.messageApi = res.data.message ?? 'Error ' + res.status
@@ -120,8 +119,8 @@
                 this.alertType = 'success'
                 this.messageApi = res.data.message
                 setTimeout(() => {
-                  window.location.reload()
-                }, 1000);
+                  window.location.href = res.data.data.redir;
+                }, 2000);
               }
             }
           })

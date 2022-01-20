@@ -20,8 +20,13 @@ class BaseResourceApi extends ResourceController
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         parent::initController($request, $response, $logger);
-        $this->jenis_akses = $request->uri->getSegments()[0];
-        if($this->jenis_akses === 'web'){
+        $segment = 0;
+        if ($request->uri->getSegments()[0] === 'herauth') {
+            $segment = 1;
+        }
+        $this->jenis_akses = $request->uri->getSegments()[$segment];
+        $request->jenis_akses = $this->jenis_akses;
+        if ($this->jenis_akses === 'web') {
             $this->session = session();
         }
     }
@@ -55,7 +60,7 @@ class BaseResourceApi extends ResourceController
         /** @var IncomingRequest $request */
         if (strpos($request->getHeaderLine('Content-Type'), 'application/json') !== false) {
             $data = $request->getJSON(true);
-        }else{
+        } else {
             if (
                 in_array($request->getMethod(), ['put', 'patch', 'delete'], true)
                 && strpos($request->getHeaderLine('Content-Type'), 'multipart/form-data') === false
@@ -66,9 +71,9 @@ class BaseResourceApi extends ResourceController
             }
         }
         $data = (array) array_merge((array)$data, $request->getFiles() ?? []);
-        if($filtering){
+        if ($filtering) {
             return $this->filteringData($data);
-        }else{
+        } else {
             return $data;
         }
     }

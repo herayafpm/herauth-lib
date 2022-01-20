@@ -6,7 +6,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
 use DomainException;
-use Exception;
+use Raydragneel\HerauthLib\Models\ClientModel;
 
 class ApiFilter implements FilterInterface
 {
@@ -19,10 +19,24 @@ class ApiFilter implements FilterInterface
             'data' => []
         ];
         try {
-            if ($request->uri->getSegments()[0] === 'api') {
-                if (!$request->hasHeader('client-key')) {
-                    throw new DomainException(lang("Filters.clientKeyIsRequired"));
+            $segment = 0;
+            if ($request->uri->getSegments()[0] === 'herauth') {
+                $segment = 1;
+            }
+            if ($request->uri->getSegments()[$segment] === 'api') {
+                if (!$request->hasHeader('api-key')) {
+                    throw new DomainException(lang("Filters.apiKey.IsRequired"));
                 }
+                $apiKey = $request->getHeader('api-key')->getValue() ?? '';
+                if (empty($apiKey)) {
+                    throw new DomainException(lang("Filters.apiKey.cannotEmpty"));
+                }
+                $client_model = model(ClientModel::class);
+                $client = $client_model->findByClientKey($apiKey);
+                if (empty($client)) {
+                    throw new DomainException(lang("Filters.apiKey.notFound"));
+                }
+                $client->cekWhitelist();
             }
         } catch (\DomainException $th) {
             if(!empty($th->getMessage())){
