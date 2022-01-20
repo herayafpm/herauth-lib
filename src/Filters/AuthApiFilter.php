@@ -45,7 +45,7 @@ class AuthApiFilter implements FilterInterface
                     throw new DomainException(lang("Filters.userKey.errorStructure"));
                 }
                 $jwt = ClaJWT::decode($userKey[1]);
-                $request->username = $jwt->username;
+                $request->__username = $jwt->username;
             }
         } catch (\UnexpectedValueException $th) {
             $data_res['message'] = $th->getMessage();

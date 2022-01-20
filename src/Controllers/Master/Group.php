@@ -21,6 +21,7 @@ class Group extends BaseController
         return view($this->root_view . "group/table", [
             '_json' => $this->getDataRequest(),
             'url_delete' => herauth_web_url($this->root_view . "group/delete/"),
+            'url_restore' => herauth_web_url($this->root_view . "group/restore/"),
             'url_edit' => herauth_web_url($this->root_view . "group/edit/"),
             'datas' => model(GroupModel::class)->orderBy('nama', 'asc')->withDeleted(true)->findAll()
         ]);

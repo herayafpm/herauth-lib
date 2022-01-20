@@ -3,10 +3,9 @@
 namespace Raydragneel\HerauthLib\Models;
 
 use Raydragneel\HerauthLib\Entities\ClientEntity;
-use CodeIgniter\Model;
 use Ramsey\Uuid\Uuid;
 
-class ClientModel extends Model
+class ClientModel extends BaseModel
 {
     protected $table                = 'herauth_client';
     protected $primaryKey           = 'id';

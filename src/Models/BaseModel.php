@@ -139,4 +139,12 @@ class BaseModel extends Model
 		}	
 		return $key;
 	}
+
+	public function restore($id)
+	{
+		if($this->useSoftDeletes){
+			return $this->update($id,[$this->deletedField => null]);
+		}
+		return false;
+	}
 }

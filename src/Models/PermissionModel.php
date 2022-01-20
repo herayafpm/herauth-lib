@@ -2,9 +2,7 @@
 
 namespace Raydragneel\HerauthLib\Models;
 
-use CodeIgniter\Model;
-
-class PermissionModel extends Model
+class PermissionModel extends BaseModel
 {
     protected $table                = 'herauth_permission';
     protected $primaryKey           = 'id';

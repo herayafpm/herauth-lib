@@ -21,9 +21,18 @@
                         <a role="button" class="btn btn-sm btn-primary" href="<?= base_url($url_edit . "/" . $data['id']) ?>">
                             <i class="fas fa-fw fa-edit"></i>
                         </a>
-                        <a role="button" class="btn btn-sm btn-danger hapusData" data-id="<?= $data['id'] ?>">
-                            <i class="fas fa-fw fa-trash"></i>
-                        </a>
+                        <?php if ($data['deleted_at'] === null) : ?>
+                            <a role="button" class="btn btn-sm btn-danger hapusData" data-id="<?= $data['id'] ?>">
+                                <i class="fas fa-fw fa-trash"></i>
+                            </a>
+                        <?php else : ?>
+                            <a role="button" class="btn btn-sm btn-info restoreData" data-id="<?= $data['id'] ?>">
+                                <i class="fas fa-fw fa-recycle"></i>
+                            </a>
+                            <a role="button" class="btn btn-sm btn-danger purgeData" data-id="<?= $data['id'] ?>">
+                                <i class="fas fa-fw fa-trash"></i>
+                            </a>
+                        <?php endif ?>
                     <?php else : ?>
                         -
                     <?php endif ?>
@@ -59,6 +68,38 @@
             getTable()
         })
     }
+    async function purgeData(id) {
+        await axiosValid.post("<?= $url_delete ?>" + id+"?purge=1").then((res) => {
+            if (res.status !== 200) {
+                Swal.fire({
+                    title: res.data.message,
+                    icon: 'error',
+                })
+            } else {
+                Swal.fire({
+                    title: res.data.message,
+                    icon: 'success',
+                })
+            }
+            getTable()
+        })
+    }
+    async function restoreData(id) {
+        await axiosValid.post("<?= $url_restore ?>" + id).then((res) => {
+            if (res.status !== 200) {
+                Swal.fire({
+                    title: res.data.message,
+                    icon: 'error',
+                })
+            } else {
+                Swal.fire({
+                    title: res.data.message,
+                    icon: 'success',
+                })
+            }
+            getTable()
+        })
+    }
     $(document).ready(function() {
         $("#tableMaster").DataTable({
             "responsive": true,
@@ -80,6 +121,40 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     hapusData(id)
+                }
+            })
+        })
+        $("#tableMaster").on('click', '.restoreData', function() {
+            var id = $(this).data('id')
+            Swal.fire({
+                title: 'Anda Yakin ingin mengembalikan data ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                cancelButtonText: 'Tidak',
+                confirmButtonText: 'Ya, kembalikan!',
+                reverseButtons: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    restoreData(id)
+                }
+            })
+        })
+        $("#tableMaster").on('click', '.purgeData', function() {
+            var id = $(this).data('id')
+            Swal.fire({
+                title: 'Anda Yakin ingin menghapus data ini selamanya?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                cancelButtonText: 'Tidak',
+                confirmButtonText: 'Ya, hapus selamanya!',
+                reverseButtons: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    purgeData(id)
                 }
             })
         })

@@ -38,8 +38,8 @@ class AfterRequestFilter implements FilterInterface
                 }
                 $client = 'web';
             } else {
-                if ($request->username ?? '' !== '') {
-                    $username = $request->username;
+                if ($request->__username ?? '' !== '') {
+                    $username = $request->__username;
                 }
                 $apiKey = $request->getHeader('api-key')->getValue() ?? '';
                 $client_model = model(ClientModel::class);

@@ -31,12 +31,12 @@ class BaseResourceApi extends ResourceController
         if ($this->jenis_akses === 'web') {
             $this->session = session();
             if($this->session->has('username')){
-                $_user = $admin_model->cekUser($request->username);
+                $_user = $admin_model->cekUser($this->session->get('username'));
                 $this->__user = $_user;
             }
         }else{
-            if($request->username ?? '' !== ''){
-                $_user = $admin_model->cekUser($request->username);
+            if($request->__username ?? '' !== ''){
+                $_user = $admin_model->cekUser($request->__username);
                 $this->__user = $_user;
             }
         }

@@ -2,10 +2,9 @@
 
 namespace Raydragneel\HerauthLib\Models;
 
-use CodeIgniter\Model;
 use Raydragneel\HerauthLib\Entities\ClientWhitelistEntity;
 
-class ClientWhitelistModel extends Model
+class ClientWhitelistModel extends BaseModel
 {
     protected $table                = 'herauth_client_whitelist';
     protected $primaryKey           = 'id';
