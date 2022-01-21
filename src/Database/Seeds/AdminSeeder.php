@@ -32,7 +32,7 @@ class AdminSeeder extends Seeder
 				foreach ($data['groups'] as $group) {
 					$group = $group_model->findGroupByName($group);
 					if ($group) {
-						$user_group_model->save(['group_id' => $group['id'], 'username' => $username]);
+						$user_group_model->save(['group_id' => $group->id, 'username' => $username]);
 					}
 				}
 			}

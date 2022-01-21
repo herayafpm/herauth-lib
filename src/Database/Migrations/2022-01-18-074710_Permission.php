@@ -19,7 +19,7 @@ class Permission extends Migration
 				'type'           => 'VARCHAR',
 				'constraint'     => '255',
 			],
-			'desc'       => [
+			'deskripsi'       => [
 				'type'           => 'TEXT',
 				'null'			=> true
 			],

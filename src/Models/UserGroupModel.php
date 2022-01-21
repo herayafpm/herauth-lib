@@ -2,13 +2,15 @@
 
 namespace Raydragneel\HerauthLib\Models;
 
+use Raydragneel\HerauthLib\Entities\UserGroupEntity;
+
 class UserGroupModel extends BaseModel
 {
     protected $table                = 'herauth_user_group';
     protected $primaryKey           = 'id';
     protected $useAutoIncrement     = true;
     protected $insertID             = 0;
-    protected $returnType           = 'array';
+    protected $returnType           = UserGroupEntity::class;
     protected $useSoftDeletes       = true;
     protected $protectFields        = true;
     protected $allowedFields        = ['group_id', 'username','deleted_at'];

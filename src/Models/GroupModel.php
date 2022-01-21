@@ -2,6 +2,7 @@
 
 namespace Raydragneel\HerauthLib\Models;
 
+use Raydragneel\HerauthLib\Entities\GroupEntity;
 
 class GroupModel extends BaseModel
 {
@@ -9,10 +10,10 @@ class GroupModel extends BaseModel
 	protected $primaryKey           = 'id';
 	protected $useAutoIncrement     = true;
 	protected $insertID             = 0;
-	protected $returnType           = 'array';
+	protected $returnType           = GroupEntity::class;
 	protected $useSoftDeletes       = true;
 	protected $protectFields        = true;
-	protected $allowedFields        = ['nama','desc','deleted_at'];
+	protected $allowedFields        = ['nama','deskripsi','deleted_at'];
 
 	// Dates
 	protected $useTimestamps        = true;

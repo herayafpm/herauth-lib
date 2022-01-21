@@ -16,7 +16,7 @@ class PermissionSeeder extends Seeder
         $datas = [
             [
                 "nama" => "profil.can_get",
-                "desc" => "Get Data Profil (nama & username)",
+                "deskripsi" => "Get Data Profil (nama & username)",
                 "groups" => [
                     "superadmin",
                 ],
@@ -35,7 +35,7 @@ class PermissionSeeder extends Seeder
                     $group = $group_model->findGroupByName($group);
                     if ($group) {
                         $group_permission_model->save([
-                            "group_id" => $group["id"],
+                            "group_id" => $group->id,
                             "permission_id" => $permission_id,
                         ]);
                     }

@@ -9,7 +9,7 @@ class GroupPermissionModel extends BaseModel
     protected $primaryKey           = 'id';
     protected $useAutoIncrement     = true;
     protected $insertID             = 0;
-    protected $returnType           = 'array';
+    protected $returnType           = GroupPermissionEntity::class;
     protected $useSoftDeletes       = true;
     protected $protectFields        = true;
     protected $allowedFields        = ['group_id', 'permission_id','deleted_at'];

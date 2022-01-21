@@ -2,13 +2,15 @@
 
 namespace Raydragneel\HerauthLib\Models;
 
+use Raydragneel\HerauthLib\Entities\ClientPermissionEntity;
+
 class ClientPermissionModel extends BaseModel
 {
     protected $table                = 'herauth_client_permission';
     protected $primaryKey           = 'id';
     protected $useAutoIncrement     = true;
     protected $insertID             = 0;
-    protected $returnType           = 'array';
+    protected $returnType           = ClientPermissionEntity::class;
     protected $useSoftDeletes       = true;
     protected $protectFields        = true;
     protected $allowedFields        = ['client_id', 'permission_id','deleted_at'];

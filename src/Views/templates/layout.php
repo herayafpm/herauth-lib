@@ -209,6 +209,11 @@
         var computedVue = {}
         var filtersVue = {}
 
+        function toLocaleDate(date, format = 'LL') {
+            moment.locale('id')
+            return moment(date).format(format)
+        }
+
         function formatRupiah(angka, prefix) {
             var number_string = angka.replace(/[^,\d]/g, '').toString(),
                 split = number_string.split(','),

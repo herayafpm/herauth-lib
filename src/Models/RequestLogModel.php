@@ -2,13 +2,15 @@
 
 namespace Raydragneel\HerauthLib\Models;
 
+use Raydragneel\HerauthLib\Entities\RequestLogEntity;
+
 class RequestLogModel extends BaseModel
 {
     protected $table                = 'herauth_request_log';
     protected $primaryKey           = 'id';
     protected $useAutoIncrement     = true;
     protected $insertID             = 0;
-    protected $returnType           = 'array';
+    protected $returnType           = RequestLogEntity::class;
     protected $useSoftDeletes       = true;
     protected $protectFields        = true;
     protected $allowedFields        = ['client', 'username', 'path', 'method', 'ip', 'user_agent', 'status_code', 'status_message'];

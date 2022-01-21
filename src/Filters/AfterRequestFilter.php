@@ -49,6 +49,9 @@ class AfterRequestFilter implements FilterInterface
                 }
             }
         }
+        if(isset($request->message_after)){
+            $message = $request->message_after;
+        }
         $request_log_model->save([
             'username'            => $username,
             'client' => $client,

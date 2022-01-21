@@ -25,7 +25,8 @@ $routes->group('herauth',function($routes){
             $routes->group('master', ['namespace' => $routes->namespace."\Master",'filter' => 'auth_filter'], function ($routes) {
                 $routes->group('group', function ($routes) {
                     $routes->get('','Group::index');
-                    $routes->post('list','Group::list');
+                    $routes->get('add','Group::add');
+                    $routes->get('edit/(:segment)','Group::edit/$1');
                 });
             });
             $routes->get('','Home::index');
