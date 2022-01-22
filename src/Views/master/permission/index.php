@@ -10,7 +10,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <a role="button" class="btn btn-sm btn-success" href="<?= $url_add ?>">Tambah Group</a>
+                <a role="button" class="btn btn-sm btn-success" href="<?= $url_add ?>">Tambah Permission</a>
             </div>
             <div class="card-body">
                 <table id="tableMaster" class="table table-bordered table-striped">
@@ -161,7 +161,7 @@
                 [0, 'desc']
             ], // Default sortingnya berdasarkan kolom / field ke 0 (paling pertama)
             "autoWidth": false,
-            "lengthMenu": [
+            "lenthMenu": [
                 [10, 25, 50, -1],
                 ['10 '+herlangjs("Web.datatable.row"), '25 '+herlangjs("Web.datatable.row"), '50 '+herlangjs("Web.datatable.row"), herlangjs("Web.datatable.showAll")]
             ],
@@ -248,7 +248,7 @@
         $("#tableMaster").on('click', '.hapusData', function() {
             var id = $(this).data('id')
             Swal.fire({
-                title: herlangjs('Web.confirmDelete', herlangjs('Web.master.group')),
+                title: herlangjs('Web.confirmDelete', herlangjs('Web.master.permission')),
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
@@ -265,7 +265,7 @@
         $("#tableMaster").on('click', '.restoreData', function() {
             var id = $(this).data('id')
             Swal.fire({
-                title: herlangjs('Web.confirmRestore', herlangjs('Web.master.group')),
+                title: herlangjs('Web.confirmRestore', herlangjs('Web.master.permission')),
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -282,7 +282,7 @@
         $("#tableMaster").on('click', '.purgeData', function() {
             var id = $(this).data('id')
             Swal.fire({
-                title: herlangjs('Web.confirmPurge', herlangjs('Web.master.group')),
+                title: herlangjs('Web.confirmPurge', herlangjs('Web.master.permission')),
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',

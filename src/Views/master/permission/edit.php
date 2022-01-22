@@ -26,10 +26,10 @@
                 </div>
             </div>
             <div class="col-12 mb-5">
-                <button v-if="!loadingApi" type="submit" class="btn btn-primary btn-block"><?= lang("Web.save") ?></button>
+                <button v-if="!loadingApi" type="submit" class="btn btn-primary btn-block"><?= lang('Web.save') ?></button>
                 <button v-else type="submit" class="btn btn-primary btn-block" disabled>
                     <div class="d-flex align-items-center">
-                        <strong><?= lang("Web.saving") ?>...</strong>
+                        <strong><?= lang('Web.saving') ?>...</strong>
                         <div class="spinner-border ml-auto spinner-border-sm" role="status" aria-hidden="true"></div>
                     </div>
                 </button>
@@ -43,8 +43,8 @@
 <?php $this->section('js') ?>
 <script>
     dataVue = {
-        nama: "",
-        deskripsi: ``,
+        nama: "<?= $permission->nama ?? '' ?>",
+        deskripsi: `<?= $permission->deskripsi ?? '' ?>`,
         loadingApi: false,
         messageApi: '',
         dataApi: {},
@@ -66,7 +66,7 @@
             formData.append('nama', this.nama);
             formData.append('deskripsi', this.deskripsi);
 
-            await axios.post("<?= $url_add ?>", formData, {
+            await axios.post("<?= $url_edit ?>", formData, {
                 validateStatus: () => true
             }).then((res) => {
                 if (res.status !== 200) {

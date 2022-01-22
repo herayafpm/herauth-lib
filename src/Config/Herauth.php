@@ -17,4 +17,12 @@ class Herauth extends BaseConfig
     public $publicPath = APPPATH . "../keys/public.pem";
     public $redirectLogin = 'login';
     public $redirectMain = '';
+    public $herauthLangJsUrl = '';
+    public $mainLangJsUrl = '';
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->herauthLangJsUrl = herauth_asset_url('lang');
+    }
 }

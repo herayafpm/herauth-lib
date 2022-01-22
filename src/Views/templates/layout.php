@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= $__locale ?>">
 
 <head>
     <meta charset="utf-8">
@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="<?= herauth_asset_url('vendor/adminlte') ?>/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="<?= herauth_asset_url('vendor/adminlte') ?>/plugins/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" href="<?= herauth_asset_url('vendor/adminlte') ?>/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    <link rel="stylesheet" href="<?= herauth_asset_url('vendor/adminlte') ?>/plugins/flag-icon-css/css/flag-icon.min.css">
+    
     <?= $this->renderSection('css') ?>
 </head>
 
@@ -37,16 +39,33 @@
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
+                    <a class="nav-link d-flex align-items-center" data-toggle="dropdown" href="#">
+                        <?php $locale_img = herauth_locale_img($__locale);?>
+                        <img src="<?= herauth_asset_url('vendor/adminlte/plugins/flag-icon-css/flags/1x1/'. $locale_img . ".svg") ?>">
+                        <i class="fas fa-angle-down ml-1"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                        <?php foreach ($__locale_list as $locale) :
+                            $locale_img = herauth_locale_img($locale);
+                        ?>
+                            <a href="<?= herauth_set_locale($locale) ?>" class="dropdown-item mb-1">
+                                <img src="<?= herauth_asset_url('vendor/adminlte/plugins/flag-icon-css/flags/1x1/' . $locale_img . ".svg") ?>" style="height:20px">
+                                <?= herauth_locale_text($locale); ?>
+                            </a>
+                        <?php endforeach ?>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="fas fa-user"></i>
                         <i class="fas fa-angle-down"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <a href="<?= herauth_base_locale_url('profil') ?>" class="dropdown-item">
-                            <i class="nav-icon fas fa-user"></i> Profil
+                            <i class="nav-icon fas fa-user"></i> <?= lang('Web.profil') ?>
                         </a>
                         <a href="<?= herauth_base_locale_url('logout') ?>" class="dropdown-item bg-red">
-                            <i class="nav-icon fas fa-power-off"></i> Logout
+                            <i class="nav-icon fas fa-power-off"></i> <?= lang('Web.logout') ?>
                         </a>
                     </div>
                 </li>
@@ -85,26 +104,26 @@
                             <a href="<?= herauth_base_locale_url('') ?>" class="nav-link <?= in_array($url, ['', '/dashboard']) ? 'active' : '' ?>">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    Dashboard
+                                    <?= lang("Web.dashboard") ?>
                                 </p>
                             </a>
                         </li>
                         <?php
                         $list_master_data = [
                             [
-                                'nama' => 'Group',
+                                'nama' => lang("Web.master.group"),
                                 'this_url' =>  'group'
                             ],
                             [
-                                'nama' => 'Permission',
+                                'nama' => lang("Web.master.permission"),
                                 'this_url' =>  'permission'
                             ],
                             [
-                                'nama' => 'Client',
+                                'nama' => lang("Web.master.client"),
                                 'this_url' =>  'client'
                             ],
                             [
-                                'nama' => 'Admin',
+                                'nama' => lang("Web.master.admin"),
                                 'this_url' =>  'admin'
                             ],
                         ];
@@ -113,7 +132,7 @@
                             <a href="#" class="nav-link menuMasterLink <?= in_array(str_replace('/master/', '', $url), array_column($list_master_data, 'this_url')) ? 'active' : '' ?>">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
-                                    Master Data
+                                    <?= lang("Web.master.data") ?>
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
@@ -194,6 +213,12 @@
     <script src="<?= herauth_asset_url('vendor/axios') ?>/axios.min.js"></script>
     <script src="<?= herauth_asset_url('vendor/adminlte/plugins/moment/moment-with-locales.min.js') ?>"></script>
     <script src="<?= herauth_asset_url('vendor/vuejs') ?>/vue.js"></script>
+    <script src="<?= herauth_asset_url('lang') ?>/lang.js"></script>
+    <script>
+        herlangjsSetLocaleSupport(<?= json_encode($__locale_list ?? []) ?>);
+        herlangjsSetPathLocale("<?= config("Herauth")->herauthLangJsUrl ?? '' ?>");
+        herlangjsSetLocale("<?= $__locale ?? 'id' ?>");
+    </script>
     <script>
         const axiosValid = axios.create({
             validateStatus: () => true,
@@ -210,7 +235,7 @@
         var filtersVue = {}
 
         function toLocaleDate(date, format = 'LL') {
-            moment.locale('id')
+            moment.locale("<?= $__locale ?? 'id' ?>")
             return moment(date).format(format)
         }
 

@@ -57,7 +57,8 @@ class BaseController extends Controller
 
         $this->data['__app_name'] = 'Herauth';
         $this->data['_main_path'] = $this->root_view;
-        // $this->data['__locale'] = $locale;
+        $this->data['__locale'] = $request->getLocale() ?? 'id';
+        $this->data['__locale_list'] = config('App')->supportedLocales ?? ['id','en'];
         $this->session = session();
         $this->data['session'] = $this->session;
         $url = current_url();

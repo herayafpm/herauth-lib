@@ -1,0 +1,28 @@
+{
+    "confirmDelete": "Anda yakin ingin menghapus {0} ini?",
+    "confirmRestore": "Anda yakin ingin mengembalikan {0} ini?",
+    "confirmPurge": "Anda yakin ingin menghapus {0} ini selamanya?",
+    "cancelText": "Tidak",
+    "confirmText": "Ya",
+    "delete": "Hapus",
+    "restore": "Kembalikan",
+    "purge": "Hapus selamanya",
+    "notFound": "Tidak ditemukkan",
+    "empty": "Kosong",
+    "datatable":{
+        "di":"Di",
+        "filter":"Filter",
+        "from":"Dari",
+        "show":"Tampil",
+        "showAll":"Tampil Semua",
+        "row":"Baris",
+        "data":"Data",
+        "per":"Per",
+        "page":"Halaman",
+        "total":"Total"
+    },
+    "master":{
+        "group":"Group",
+        "permission":"Permission"
+    }
+}

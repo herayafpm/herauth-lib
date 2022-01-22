@@ -2,6 +2,7 @@
 
 namespace Raydragneel\HerauthLib\Controllers\Api;
 
+use DomainException;
 use Raydragneel\HerauthLib\Entities\AdminEntity;
 use Raydragneel\HerauthLib\Libraries\ClaJWT;
 use Raydragneel\HerauthLib\Models\AdminModel;

@@ -28,6 +28,11 @@ $routes->group('herauth',function($routes){
                     $routes->get('add','Group::add');
                     $routes->get('edit/(:segment)','Group::edit/$1');
                 });
+                $routes->group('permission', function ($routes) {
+                    $routes->get('','Permission::index');
+                    $routes->get('add','Permission::add');
+                    $routes->get('edit/(:segment)','Permission::edit/$1');
+                });
             });
             $routes->get('','Home::index');
             $routes->get('(:any)','Home::index/$1');

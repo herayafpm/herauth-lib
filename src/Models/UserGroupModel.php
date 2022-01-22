@@ -46,6 +46,6 @@ class UserGroupModel extends BaseModel
 
     public function getGroupsForUser($username)
     {
-        return $this->select("{$this->table}.*,group.nama")->join("group", "{$this->table}.group_id = group.id", "LEFT")->where(['username' => $username])->findAll();
+        return $this->select("{$this->table}.*,group.nama")->join("herauth_group group", "{$this->table}.group_id = group.id", "LEFT")->where(['username' => $username])->findAll();
     }
 }

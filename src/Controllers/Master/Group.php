@@ -12,7 +12,7 @@ class Group extends BaseController
     public function index()
     {
         $data = [
-            'page_title' => 'Group',
+            'page_title' => lang("Web.master.group"),
             'url_datatable' => herauth_web_url($this->root_view . "group/datatable"),
             'url_add' => herauth_base_locale_url($this->root_view . "group/add"),
             'url_edit' => herauth_base_locale_url($this->root_view . "group/edit/"),
@@ -35,7 +35,7 @@ class Group extends BaseController
     public function add()
     {
         $data = [
-            'page_title' => 'Tambah Group',
+            'page_title' => lang("Web.add")." ".lang("Web.master.group"),
             'url_add' => herauth_web_url($this->root_view . "group/add"),
         ];
         return $this->view("group/add", $data);
@@ -48,10 +48,11 @@ class Group extends BaseController
         }
 
         $data = [
-            'page_title' => 'Edit Group ' . $group['nama'],
-            'url_add' => herauth_web_url($this->root_view . "group/add"),
+            'page_title' => lang("Web.edit")." ".lang("Web.master.group")." " . $group->nama,
+            'group' => $group,
+            'url_edit' => herauth_web_url($this->root_view . "group/edit/".$id),
         ];
-        return $this->view("group/add", $data);
+        return $this->view("group/edit", $data);
     }
 
 }

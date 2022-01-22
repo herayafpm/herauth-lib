@@ -40,6 +40,9 @@ class Assets extends BaseController
         if(strpos($path,'.js') !== false){
             $ctype = 'text/javascript';
         }
+        if(strpos($path,'.svg') !== false){
+            $ctype = 'image/svg+xml';
+        }
         return $ctype;
     }
 }
