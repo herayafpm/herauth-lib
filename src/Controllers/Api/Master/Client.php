@@ -69,7 +69,8 @@ class Client extends BaseResourceApi
         $update_data = [
             'nama' => $data['nama'],
             'expired' => null,
-            'hit_limit' => null
+            'hit_limit' => null,
+            'client_key' => $client->client_key
         ];
         if(!empty($data['expired'])){
             $update_data['expired'] = date("Y-m-d H:i:s",strtotime($data['expired']));
@@ -77,7 +78,6 @@ class Client extends BaseResourceApi
         if(!empty($data['hit_limit'])){
             $update_data['hit_limit'] = $data['hit_limit'];
         }
-
         if ($this->model->update($id, $update_data)) {
             return $this->respond(["status" => true, "message" => lang("Api.successEditRequest", [lang("Web.master.client")]), "data" => ['redir' => herauth_base_locale_url('master/client')]], 200);
         } else {
@@ -124,6 +124,18 @@ class Client extends BaseResourceApi
                 return $this->respond(["status" => true, "message" => lang("Api.successRestoreRequest", [lang("Web.master.client")]), "data" => []], 200);
             } else {
                 return $this->respond(["status" => false, "message" => lang("Api.failRestoreRequest", [lang("Web.master.client")]), "data" => []], 400);
+            }
+        }
+        return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.client")]), "data" => []], 404);
+    }
+    public function regenerate_key($id = null)
+    {
+        $client = $this->model->withDeleted(true)->find($id);
+        if ($client) {
+            if ($this->model->regenerate_key($id)) {
+                return $this->respond(["status" => true, "message" => lang("Api.successRegenerateKeyRequest", [lang("Web.master.client")]), "data" => []], 200);
+            } else {
+                return $this->respond(["status" => false, "message" => lang("Api.failRegenerateKeyRequest", [lang("Web.master.client")]), "data" => []], 400);
             }
         }
         return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.client")]), "data" => []], 404);

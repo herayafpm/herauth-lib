@@ -18,6 +18,7 @@ class Client extends BaseController
             'url_edit' => herauth_base_locale_url($this->root_view . "client/edit/"),
             'url_delete' => herauth_web_url($this->root_view . "client/delete/"),
             'url_restore' => herauth_web_url($this->root_view . "client/restore/"),
+            'url_regenerate_key' => herauth_web_url($this->root_view . "client/regenerate_key/"),
         ];
         return $this->view("client/index", $data);
     }
@@ -27,8 +28,7 @@ class Client extends BaseController
         return view($this->root_view . "client/table", [
             '_json' => $this->getDataRequest(),
             'url_delete' => herauth_web_url($this->root_view . "client/delete/"),
-            'url_restore' => herauth_web_url($this->root_view . "client/restore/"),
-            'datas' => $this->model->orderBy('nama', 'asc')->withDeleted(true)->findAll()
+            'url_restore' => herauth_web_url($this->root_view . "client/restore/")
         ]);
     }
 

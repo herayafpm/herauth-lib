@@ -10,7 +10,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <a role="button" class="btn btn-sm btn-success" href="<?= $url_add ?>">Tambah Permission</a>
+                <a role="button" class="btn btn-sm btn-success" href="<?= $url_add ?>"><?=lang("Web.add")." ".lang("Web.master.permission")?></a>
             </div>
             <div class="card-body">
                 <table id="tableMaster" class="table table-bordered table-striped">

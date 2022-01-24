@@ -10,15 +10,15 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <a role="button" class="btn btn-sm btn-success" href="<?= $url_add ?>"><?= lang("Web.add") . " " . lang("Web.master.group") ?></a>
+                <a role="button" class="btn btn-sm btn-success" href="<?= $url_add ?>"><?=lang("Web.add")." ".lang("Web.master.admin")?></a>
             </div>
             <div class="card-body">
                 <table id="tableMaster" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th class="text-center" width="10">No.</th>
+                            <th>Username</th>
                             <th>Nama</th>
-                            <th>Deskripsi</th>
                             <th>Updated At</th>
                             <th width="100">Aksi</th>
                         </tr>
@@ -28,8 +28,8 @@
                     <tfoot>
                         <tr>
                             <th class="text-center" width="10">No.</th>
+                            <th>Username</th>
                             <th>Nama</th>
-                            <th>Deskripsi</th>
                             <th>Updated At</th>
                             <th width="100">Aksi</th>
                         </tr>
@@ -142,7 +142,7 @@
                 "zeroRecords": herlangjs("Web.datatable.data") + " " + herlangjs("Web.notFound"),
                 "info": herlangjs("Web.datatable.show") + " " + herlangjs("Web.datatable.page") + " _PAGE_ " + herlangjs("Web.datatable.from") + " _PAGES_",
                 "infoEmpty": herlangjs("Web.datatable.data") + " " + herlangjs("Web.empty"),
-                "infoFiltered": "(" + herlangjs("Web.datatable.di") + herlangjs("Web.datatable.filter") + " " + herlangjs("Web.datatable.from") + " _MAX_ " + herlangjs("Web.datatable.total") + " " + herlangjs("Web.datatable.data") + ")"
+                "infoFiltered": "("+herlangjs("Web.datatable.di")+herlangjs("Web.datatable.filter")+" "+herlangjs("Web.datatable.from")+" _MAX_ "+herlangjs("Web.datatable.total")+" "+herlangjs("Web.datatable.data")+")"
             },
             "dom": 'Bfrtip',
             "buttons": [
@@ -163,7 +163,7 @@
             "autoWidth": false,
             "lengthMenu": [
                 [10, 25, 50, -1],
-                ['10 ' + herlangjs("Web.datatable.row"), '25 ' + herlangjs("Web.datatable.row"), '50 ' + herlangjs("Web.datatable.row"), herlangjs("Web.datatable.showAll")]
+                ['10 '+herlangjs("Web.datatable.row"), '25 '+herlangjs("Web.datatable.row"), '50 '+herlangjs("Web.datatable.row"), herlangjs("Web.datatable.showAll")]
             ],
             "ajax": {
                 "url": "<?= $url_datatable ?>", // URL file untuk proses select datanya
@@ -181,7 +181,7 @@
             'columnDefs': [{
                 "targets": [4],
                 "orderable": false
-            }, {
+            },{
                 "targets": [0],
                 "className": 'text-center'
             }],
@@ -189,13 +189,10 @@
                     "data": "id",
                 },
                 {
-                    "data": "nama",
+                    "data": "username",
                 },
                 {
-                    "data": "deskripsi",
-                    "render": function(dt, type, row, meta) {
-                        return row.deskripsi === null ? '-' : row.deskripsi
-                    }
+                    "data": "nama",
                 },
                 {
                     "data": "updated_at.date",
@@ -207,7 +204,7 @@
                     "data": "id",
                     "render": function(dt, type, row, meta) { // Tampilkan kolom aksi
                         var html = '';
-                        if (row.nama !== 'superadmin') {
+                        if (row.username !== 'superadmin') {
                             html += `
                             <a role="button" class="btn btn-sm btn-primary" href="<?= $url_edit ?>${row.id}">
                                 <i class="fas fa-fw fa-edit"></i>
@@ -248,7 +245,7 @@
         $("#tableMaster").on('click', '.hapusData', function() {
             var id = $(this).data('id')
             Swal.fire({
-                title: herlangjs('Web.confirmDelete', herlangjs('Web.master.group')),
+                title: herlangjs('Web.confirmDelete', herlangjs('Web.master.admin')),
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
@@ -265,7 +262,7 @@
         $("#tableMaster").on('click', '.restoreData', function() {
             var id = $(this).data('id')
             Swal.fire({
-                title: herlangjs('Web.confirmRestore', herlangjs('Web.master.group')),
+                title: herlangjs('Web.confirmRestore', herlangjs('Web.master.admin')),
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -282,7 +279,7 @@
         $("#tableMaster").on('click', '.purgeData', function() {
             var id = $(this).data('id')
             Swal.fire({
-                title: herlangjs('Web.confirmPurge', herlangjs('Web.master.group')),
+                title: herlangjs('Web.confirmPurge', herlangjs('Web.master.admin')),
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',

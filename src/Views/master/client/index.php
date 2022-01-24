@@ -10,7 +10,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <a role="button" class="btn btn-sm btn-success" href="<?= $url_add ?>">Tambah Client</a>
+                <a role="button" class="btn btn-sm btn-success" href="<?= $url_add ?>"><?= lang("Web.add") . " " . lang("Web.master.client") ?></a>
             </div>
             <div class="card-body">
                 <table id="tableMaster" class="table table-bordered table-striped">
@@ -129,6 +129,22 @@
             vue.reloadDatatable()
         })
     }
+    async function regenerateKey(id) {
+        await axiosValid.post("<?= $url_regenerate_key ?>" + id).then((res) => {
+            if (res.status !== 200) {
+                Swal.fire({
+                    title: res.data.message,
+                    icon: 'error',
+                })
+            } else {
+                Swal.fire({
+                    title: res.data.message,
+                    icon: 'success',
+                })
+            }
+            vue.reloadDatatable()
+        })
+    }
 
     $(document).ready(function() {
         tableMaster = $("#tableMaster").DataTable({
@@ -220,6 +236,16 @@
                                 <i class="fas fa-fw fa-edit"></i>
                             </a>
                             `
+                        html += `
+                            <a role="button" class="btn btn-sm btn-warning regenerateData" data-id="${row.id}">
+                                <i class="fas fa-fw fa-sync"></i>
+                            </a>
+                            `
+                        html += `
+                            <a role="button" class="btn btn-sm btn-info showClientKey" data-id="${meta.row}">
+                                <i class="fas fa-fw fa-eye"></i>
+                            </a>
+                            `
                         if (row.deleted_at === null) {
                             html += `
                             <a role="button" class="btn btn-sm btn-danger hapusData" data-id="${row.id}">
@@ -249,6 +275,31 @@
                 cell.innerHTML = i + 1;
             });
         }).draw();
+        $("#tableMaster").on('click', '.regenerateData', function() {
+            var id = $(this).data('id')
+            Swal.fire({
+                title: herlangjs('Web.confirmRegenerateKey', herlangjs('Web.master.client')),
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                cancelButtonText: herlangjs('Web.cancelText'),
+                confirmButtonText: herlangjs('Web.confirmText') + ", " + herlangjs('Web.regenerateKey') + "!",
+                reverseButtons: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    regenerateKey(id)
+                }
+            })
+        })
+        $("#tableMaster").on('click', '.showClientKey', function() {
+            var id = $(this).data('id')
+            Swal.fire({
+                title: herlangjs('Web.master.client') + " " +herlangjs('Web.key'),
+                text: vue.list[id].client_key,
+                icon: 'info',
+            })
+        })
         $("#tableMaster").on('click', '.hapusData', function() {
             var id = $(this).data('id')
             Swal.fire({

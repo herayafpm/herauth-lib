@@ -57,4 +57,18 @@ class ClientModel extends BaseModel
     {
         return $this->where(['client_key' => $client_key])->first();
     }
+
+    public function restore($id)
+	{
+		if($this->useSoftDeletes){
+            $client = $this->withDeleted(true)->find($id);
+			return $this->update($id,[$this->deletedField => null,'client_key' => $client->client_key]);
+		}
+		return false;
+	}
+    public function regenerate_key($id)
+	{
+        $client = $this->withDeleted(true)->find($id);
+        return $this->update($id,['nama' => $client->nama]);
+	}
 }

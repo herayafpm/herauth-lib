@@ -25,4 +25,11 @@ $routes->group('master', ['namespace' => $routes->namespace . "\Master", 'filter
         $routes->post('restore/(:segment)', 'Client::restore/$1');
         $routes->post('delete/(:segment)', 'Client::delete/$1');
     });
+    $routes->group('admin', function ($routes) {
+        $routes->post('datatable', 'Admin::datatable');
+        $routes->post('add', 'Admin::add');
+        $routes->post('edit/(:segment)', 'Admin::edit/$1');
+        $routes->post('restore/(:segment)', 'Admin::restore/$1');
+        $routes->post('delete/(:segment)', 'Admin::delete/$1');
+    });
 });
