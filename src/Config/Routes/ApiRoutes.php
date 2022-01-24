@@ -33,6 +33,7 @@ $routes->group('master', ['namespace' => $routes->namespace . "\Master", 'filter
         $routes->post('restore/(:segment)', 'Client::restore/$1');
         $routes->post('delete/(:segment)', 'Client::delete/$1');
         $routes->post('save_permissions/(:segment)', 'Client::save_permissions/$1');
+        $routes->post('save_whitelists/(:segment)', 'Client::save_whitelists/$1');
     });
     $routes->group('admin', function ($routes) {
         $routes->post('groups', 'Admin::groups');

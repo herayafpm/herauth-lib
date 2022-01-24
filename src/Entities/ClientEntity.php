@@ -172,4 +172,24 @@ class ClientEntity extends Entity
         return $client_permission_model->where(['client_id' => $this->attributes['id']])->findAll();
     }
 
+    public function getClientWhitelistWeb()
+    {
+        return $this->clientWhitelist('ip');
+    }
+    public function getClientWhitelistAndroid()
+    {
+        return $this->clientWhitelist('android');
+    }
+    public function getClientWhitelistIOS()
+    {
+        return $this->clientWhitelist('ios');
+    }
+
+    protected function clientWhitelist($type)
+    {
+        $client_whitelist_model = model(ClientWhitelistModel::class);
+        return $client_whitelist_model->select("id,whitelist_name,whitelist_key")->where(['whitelist_type' => $type])->findAll();
+    }
+
+
 }

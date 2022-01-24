@@ -237,6 +237,11 @@
                             </a>
                             `
                         html += `
+                            <a role="button" class="btn btn-sm btn-info" href="<?= $url_whitelists ?>${row.id}">
+                                <i class="fab fa-fw fa-android"></i>
+                            </a>
+                            `
+                        html += `
                             <a role="button" class="btn btn-sm btn-primary" href="<?= $url_edit ?>${row.id}">
                                 <i class="fas fa-fw fa-edit"></i>
                             </a>

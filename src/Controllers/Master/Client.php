@@ -20,6 +20,7 @@ class Client extends BaseController
             'url_restore' => herauth_web_url($this->root_view . "client/restore/"),
             'url_regenerate_key' => herauth_web_url($this->root_view . "client/regenerate_key/"),
             'url_permissions' => herauth_base_locale_url($this->root_view . "client/permissions/"),
+            'url_whitelists' => herauth_base_locale_url($this->root_view . "client/whitelists/"),
         ];
         return $this->view("client/index", $data);
     }
@@ -71,6 +72,20 @@ class Client extends BaseController
             'url_client_permissions' => herauth_web_url($this->root_view . "client/permissions/".$id),
         ];
         return $this->view("client/permission", $data);
+    }
+    public function whitelists($id = null)
+    {
+        $client = $this->model->withDeleted(true)->find($id);
+        if (!$client) {
+            throw new PageNotFoundException();
+        }
+
+        $data = [
+            'page_title' => lang("Web.master.client")." ".lang("Web.master.whitelist")." " . $client->nama,
+            'client' => $client,
+            'url_save' => herauth_web_url($this->root_view . "client/save_whitelists/".$id),
+        ];
+        return $this->view("client/whitelist", $data);
     }
 
 }

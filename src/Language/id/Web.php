@@ -20,6 +20,7 @@ return [
         'group' => 'Group',
         'permission' => 'Permission',
         'client' => 'Client',
+        'whitelist' => 'Whitelist',
         'admin' => 'Admin',
         'expired' => 'Expired',
         'hit_limit' => 'Hit Limit',
@@ -28,5 +29,10 @@ return [
         'no' => "No.",
         'updatedAt' => "Updated At",
         'action' => 'Aksi'
+    ],
+    'client' => [
+        'ipAddress' => 'IP Address',
+        'android' => 'Android',
+        'ios' => 'IOS'
     ]
 ];

@@ -5,6 +5,7 @@ namespace Raydragneel\HerauthLib\Controllers\Api\Master;
 use Raydragneel\HerauthLib\Controllers\Api\BaseResourceApi;
 use Raydragneel\HerauthLib\Models\ClientModel;
 use Raydragneel\HerauthLib\Models\ClientPermissionModel;
+use Raydragneel\HerauthLib\Models\ClientWhitelistModel;
 
 class Client extends BaseResourceApi
 {
@@ -174,6 +175,103 @@ class Client extends BaseResourceApi
                 }
             }
             return $this->respond(["status" => true, "message" => lang("Api.successSaveClientRequest",[lang("Web.master.permission")]), "data" => []], 200);
+        }
+        return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.client")]), "data" => []], 404);
+    }
+
+    public function save_whitelists($id = null)
+    {
+        $data = $this->getDataRequest();
+        $client = $this->model->withDeleted(true)->find($id);
+        if ($client) {
+            $client_whitelist_model = model(ClientWhitelistModel::class);
+            $client_whitelist_model->where(['client_id' => $id])->delete();
+            foreach ($data['web'] as $web) {
+                if((int)$web['id'] !== 0){
+                    $client_whitelist_model->where(['client_id' => $id,'id' => $web['id']])->set([
+                        'whitelist_name' => $web['whitelist_name'],
+                        'whitelist_key' => $web['whitelist_key'],
+                        'whitelist_type' => 'ip',
+                        'deleted_at' => null
+                    ])->update();
+                }else{
+                    $client_whitelist = $client_whitelist_model->where(['client_id' => $id,'whitelist_key' => $web['whitelist_key']])->withDeleted(true)->first();
+                    var_dump($client_whitelist);
+                    if($client_whitelist){
+                        $client_whitelist_model->where(['client_id' => $id,'id' => $client_whitelist->id])->set([
+                            'whitelist_name' => $web['whitelist_name'],
+                            'whitelist_key' => $web['whitelist_key'],
+                            'whitelist_type' => 'ip',
+                            'deleted_at' => null,
+                        ])->update();
+                    }else{
+                        $client_whitelist_model->save([
+                            'client_id' => $id,
+                            'whitelist_name' => $web['whitelist_name'],
+                            'whitelist_key' => $web['whitelist_key'],
+                            'whitelist_type' => 'ip'
+                        ]);
+                    }
+
+                }
+            }
+            foreach ($data['android'] as $android) {
+                if((int)$android['id'] !== 0){
+                    $client_whitelist_model->where(['client_id' => $id,'id' => $android['id']])->set([
+                        'whitelist_name' => $android['whitelist_name'],
+                        'whitelist_key' => $android['whitelist_key'],
+                        'whitelist_type' => 'android',
+                        'deleted_at' => null
+                    ])->update();
+                }else{
+                    $client_whitelist = $client_whitelist_model->where(['client_id' => $id,'whitelist_key' => $android['whitelist_key']])->withDeleted(true)->first();
+                    if($client_whitelist){
+                        $client_whitelist_model->where(['client_id' => $id,'id' => $client_whitelist->id])->set([
+                            'whitelist_name' => $android['whitelist_name'],
+                            'whitelist_key' => $android['whitelist_key'],
+                            'whitelist_type' => 'android',
+                            'deleted_at' => null,
+                        ])->update();
+                    }else{
+                        $client_whitelist_model->save([
+                            'client_id' => $id,
+                            'whitelist_name' => $android['whitelist_name'],
+                            'whitelist_key' => $android['whitelist_key'],
+                            'whitelist_type' => 'android'
+                        ]);
+                    }
+
+                }
+            }
+            foreach ($data['ios'] as $ios) {
+                if((int)$ios['id'] !== "0"){
+                    $client_whitelist_model->where(['client_id' => $id,'id' => $ios['id']])->set([
+                        'whitelist_name' => $ios['whitelist_name'],
+                        'whitelist_key' => $ios['whitelist_key'],
+                        'whitelist_type' => 'ios',
+                        'deleted_at' => null
+                    ])->update();
+                }else{
+                    $client_whitelist = $client_whitelist_model->where(['client_id' => $id,'whitelist_key' => $ios['whitelist_key']])->withDeleted(true)->first();
+                    if($client_whitelist){
+                        $client_whitelist_model->where(['client_id' => $id,'id' => $client_whitelist->id])->set([
+                            'whitelist_name' => $ios['whitelist_name'],
+                            'whitelist_key' => $ios['whitelist_key'],
+                            'whitelist_type' => 'ios',
+                            'deleted_at' => null,
+                        ])->update();
+                    }else{
+                        $client_whitelist_model->save([
+                            'client_id' => $id,
+                            'whitelist_name' => $ios['whitelist_name'],
+                            'whitelist_key' => $ios['whitelist_key'],
+                            'whitelist_type' => 'ios'
+                        ]);
+                    }
+
+                }
+            }
+            return $this->respond(["status" => true, "message" => lang("Api.successSaveClientRequest",[lang("Web.master.whitelist")]), "data" => []], 200);
         }
         return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.client")]), "data" => []], 404);
     }

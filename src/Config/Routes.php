@@ -40,6 +40,7 @@ $routes->group('herauth',function($routes){
                     $routes->get('add','Client::add');
                     $routes->get('edit/(:segment)','Client::edit/$1');
                     $routes->get('permissions/(:segment)','Client::permissions/$1');
+                    $routes->get('whitelists/(:segment)','Client::whitelists/$1');
                 });
                 $routes->group('admin', function ($routes) {
                     $routes->get('','Admin::index');
