@@ -207,6 +207,11 @@
                     "data": "id",
                     "render": function(dt, type, row, meta) { // Tampilkan kolom aksi
                         var html = '';
+                        html += `
+                            <a role="button" class="btn btn-sm btn-info" href="<?= $url_users ?>${row.id}">
+                                <i class="fas fa-fw fa-users"></i>
+                            </a>
+                            `
                         if (row.nama !== 'superadmin') {
                             html += `
                             <a role="button" class="btn btn-sm btn-primary" href="<?= $url_edit ?>${row.id}">
@@ -229,8 +234,6 @@
                             </a>
                             `
                             }
-                        } else {
-                            html += '-'
                         }
                         return html
                     }

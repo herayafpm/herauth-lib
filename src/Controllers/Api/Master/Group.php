@@ -4,6 +4,7 @@ namespace Raydragneel\HerauthLib\Controllers\Api\Master;
 
 use Raydragneel\HerauthLib\Controllers\Api\BaseResourceApi;
 use Raydragneel\HerauthLib\Models\GroupModel;
+use Raydragneel\HerauthLib\Models\UserGroupModel;
 
 class Group extends BaseResourceApi
 {
@@ -22,7 +23,7 @@ class Group extends BaseResourceApi
             'nama' => $data['search']['value'] ?? ''
         ];
         $this->request->message_after = lang("Api.successRetrieveRequest", [lang("Web.master.group")]);
-        return $this->respond($this->datatable_get(['withDeleted' => true,'like' => $like]), 200);
+        return $this->respond($this->datatable_get(['withDeleted' => true, 'like' => $like]), 200);
     }
 
     public function add()
@@ -122,5 +123,64 @@ class Group extends BaseResourceApi
             }
         }
         return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.group")]), "data" => []], 404);
+    }
+    public function users($id = null)
+    {
+        $group = $this->model->withDeleted(true)->find($id);
+        if ($group) {
+            $user_group_model = model(UserGroupModel::class);
+            return $this->respond(["status" => true, "message" => lang("Api.successRetrieveRequest", [lang("Web.master.user") . " " . lang("Web.master.group")]), "data" => $user_group_model->where(['group_id' => $id])->findAll()], 200);
+        }
+        return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.user") . " " . lang("Web.master.group")]), "data" => []], 404);
+    }
+
+    public function delete_user_group($id = null)
+    {
+        $data = $this->getDataRequest();
+        $group = $this->model->withDeleted(true)->find($id);
+        if ($group) {
+            $user_group_model = model(UserGroupModel::class);
+            $user_group = $user_group_model->where(['group_id' => $id, 'username' => $data['username']])->withDeleted(true)->first();
+            if ($user_group) {
+                $delete = $user_group_model->delete($user_group->id, true);
+                if ($delete) {
+                    return $this->respond(["status" => true, "message" => lang("Api.successDeleteRequest", [lang("Web.master.user") . " " . lang("Web.master.group")]), "data" => []], 200);
+                } else {
+                    return $this->respond(["status" => false, "message" => lang("Api.failDeleteRequest", [lang("Web.master.user") . " " . lang("Web.master.group")]), "data" => []], 400);
+                }
+            }
+        }
+        return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.user") . " " . lang("Web.master.group")]), "data" => []], 404);
+    }
+    public function add_user_group($id = null)
+    {
+        $data = $this->getDataRequest();
+        $group = $this->model->withDeleted(true)->find($id);
+        if ($group) {
+            $rules = [
+                'username' => [
+                    'label'  => lang("Auth.labelUsername"),
+                    'rules'  => "required",
+                    'errors' => []
+                ]
+            ];
+
+            if (!$this->validate($rules)) {
+                return $this->response->setStatusCode(400)->setJSON(["status" => false, "message" => lang("Validation.errorValidation"), "data" => $this->validator->getErrors()]);
+            }
+            $user_group_model = model(UserGroupModel::class);
+            $user_group = $user_group_model->where(['group_id' => $id, 'username' => $data['username']])->withDeleted(true)->first();
+            if ($user_group) {
+                $save = $user_group_model->update($user_group->id, ['deleted_at' => null]);
+            } else {
+                $save = $user_group_model->save(['group_id' => $id, 'username' => $data['username']]);
+            }
+            if ($save) {
+                return $this->respond(["status" => true, "message" => lang("Api.successAddRequest", [lang("Web.master.user") . " " . lang("Web.master.group")]), "data" => []], 200);
+            } else {
+                return $this->respond(["status" => false, "message" => lang("Api.failAddRequest", [lang("Web.master.user") . " " . lang("Web.master.group")]), "data" => []], 400);
+            }
+        }
+        return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.user") . " " . lang("Web.master.group")]), "data" => []], 404);
     }
 }

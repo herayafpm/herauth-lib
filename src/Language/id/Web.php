@@ -6,11 +6,13 @@ return [
     'profil' => 'Profil',
     'logout' => 'Logout',
     'add' => 'Tambah',
+    'adding' => 'Menambahkan',
     'edit' => 'Edit',
     'save' => 'Simpan',
     'saving' => 'Menyimpan',
     'optional' => 'Opsional',
     'master' => [
+        'user' => 'User',
         'name' => 'Nama',
         'desc' => 'Deskripsi',
         'data' => 'Master Data',

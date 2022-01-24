@@ -18,6 +18,7 @@ class Group extends BaseController
             'url_edit' => herauth_base_locale_url($this->root_view . "group/edit/"),
             'url_delete' => herauth_web_url($this->root_view . "group/delete/"),
             'url_restore' => herauth_web_url($this->root_view . "group/restore/"),
+            'url_users' => herauth_base_locale_url($this->root_view . "group/users/"),
         ];
         return $this->view("group/index", $data);
     }
@@ -52,6 +53,24 @@ class Group extends BaseController
             'url_edit' => herauth_web_url($this->root_view . "group/edit/".$id),
         ];
         return $this->view("group/edit", $data);
+    }
+
+
+    public function users($id = null)
+    {
+        $group = $this->model->withDeleted(true)->find($id);
+        if (!$group) {
+            throw new PageNotFoundException();
+        }
+
+        $data = [
+            'page_title' => lang("Web.master.user")." ".lang("Web.master.group")." " . $group->nama,
+            'group' => $group,
+            'url_add_user_group' => herauth_web_url($this->root_view . "group/add_user_group/".$id),
+            'url_delete_user_group' => herauth_web_url($this->root_view . "group/delete_user_group/".$id),
+            'url_user_groups' => herauth_web_url($this->root_view . "group/users/".$id),
+        ];
+        return $this->view("group/users", $data);
     }
 
 }

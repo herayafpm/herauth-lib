@@ -34,10 +34,6 @@
 <?php $this->section('js') ?>
 <script>
     dataVue = {
-        username: "",
-        nama: "",
-        password: "",
-        showPass: false,
         loadingApi: false,
         messageApi: '',
         dataApi: {},

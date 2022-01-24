@@ -10,6 +10,9 @@ $routes->group('master', ['namespace' => $routes->namespace . "\Master", 'filter
         $routes->post('edit/(:segment)', 'Group::edit/$1');
         $routes->post('restore/(:segment)', 'Group::restore/$1');
         $routes->post('delete/(:segment)', 'Group::delete/$1');
+        $routes->post('users/(:segment)', 'Group::users/$1');
+        $routes->post('add_user_group/(:segment)', 'Group::add_user_group/$1');
+        $routes->post('delete_user_group/(:segment)', 'Group::delete_user_group/$1');
     });
     $routes->group('permission', function ($routes) {
         $routes->post('datatable', 'Permission::datatable');
