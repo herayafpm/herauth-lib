@@ -16,24 +16,24 @@
                 <table id="tableMaster" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th class="text-center" width="10">No.</th>
-                            <th>Nama</th>
-                            <th>Expired</th>
-                            <th>Hit Limit</th>
-                            <th>Updated At</th>
-                            <th width="100">Aksi</th>
+                            <th class="text-center" width="10"><?= lang("Web.datatable.no") ?></th>
+                            <th><?= lang("Web.master.name") ?></th>
+                            <th><?= lang("Web.master.expired") ?></th>
+                            <th><?= lang("Web.master.hit_limit") ?></th>
+                            <th><?= lang("Web.datatable.updatedAt") ?></th>
+                            <th width="100"><?= lang("Web.datatable.action") ?></th>
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th class="text-center" width="10">No.</th>
-                            <th>Nama</th>
-                            <th>Expired</th>
-                            <th>Hit Limit</th>
-                            <th>Updated At</th>
-                            <th width="100">Aksi</th>
+                            <th class="text-center" width="10"><?= lang("Web.datatable.no") ?></th>
+                            <th><?= lang("Web.master.name") ?></th>
+                            <th><?= lang("Web.master.expired") ?></th>
+                            <th><?= lang("Web.master.hit_limit") ?></th>
+                            <th><?= lang("Web.datatable.updatedAt") ?></th>
+                            <th width="100"><?= lang("Web.datatable.action") ?></th>
                         </tr>
                     </tfoot>
                 </table>
@@ -300,7 +300,7 @@
         $("#tableMaster").on('click', '.showClientKey', function() {
             var id = $(this).data('id')
             Swal.fire({
-                title: herlangjs('Web.master.client') + " " +herlangjs('Web.key'),
+                title: herlangjs('Web.master.client') + " " + herlangjs('Web.key'),
                 text: vue.list[id].client_key,
                 icon: 'info',
             })

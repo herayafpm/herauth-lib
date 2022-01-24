@@ -32,25 +32,25 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">
-                            Users
+                            <?= lang("Web.master.users") ?>
                         </div>
                     </div>
                     <div class="card-body">
                         <table id="tableUserGroup" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th class="text-center" width="10">No.</th>
-                                    <th>Username</th>
-                                    <th width="100">Aksi</th>
+                                    <th class="text-center" width="10"><?= lang("Web.datatable.no") ?></th>
+                                    <th><?= lang("Auth.labelUsername") ?></th>
+                                    <th width="100"><?= lang("Web.datatable.action") ?></th>
                                 </tr>
                             </thead>
                             <tbody>
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th class="text-center" width="10">No.</th>
-                                    <th>Username</th>
-                                    <th width="100">Aksi</th>
+                                    <th class="text-center" width="10"><?= lang("Web.datatable.no") ?></th>
+                                    <th><?= lang("Auth.labelUsername") ?></th>
+                                    <th width="100"><?= lang("Web.datatable.action") ?></th>
                                 </tr>
                             </tfoot>
                         </table>

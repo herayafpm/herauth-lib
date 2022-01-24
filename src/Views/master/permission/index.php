@@ -10,28 +10,28 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <a role="button" class="btn btn-sm btn-success" href="<?= $url_add ?>"><?=lang("Web.add")." ".lang("Web.master.permission")?></a>
+                <a role="button" class="btn btn-sm btn-success" href="<?= $url_add ?>"><?= lang("Web.add") . " " . lang("Web.master.permission") ?></a>
             </div>
             <div class="card-body">
                 <table id="tableMaster" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th class="text-center" width="10">No.</th>
-                            <th>Nama</th>
-                            <th>Deskripsi</th>
-                            <th>Updated At</th>
-                            <th width="100">Aksi</th>
+                            <th class="text-center" width="10"><?= lang("Web.datatable.no") ?></th>
+                            <th><?= lang("Web.master.name") ?></th>
+                            <th><?= lang("Web.master.desc") ?></th>
+                            <th><?= lang("Web.datatable.updatedAt") ?></th>
+                            <th width="100"><?= lang("Web.datatable.action") ?></th>
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th class="text-center" width="10">No.</th>
-                            <th>Nama</th>
-                            <th>Deskripsi</th>
-                            <th>Updated At</th>
-                            <th width="100">Aksi</th>
+                            <th class="text-center" width="10"><?= lang("Web.datatable.no") ?></th>
+                            <th><?= lang("Web.master.name") ?></th>
+                            <th><?= lang("Web.master.desc") ?></th>
+                            <th><?= lang("Web.datatable.updatedAt") ?></th>
+                            <th width="100"><?= lang("Web.datatable.action") ?></th>
                         </tr>
                     </tfoot>
                 </table>

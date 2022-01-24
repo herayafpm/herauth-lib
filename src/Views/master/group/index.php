@@ -16,22 +16,22 @@
                 <table id="tableMaster" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th class="text-center" width="10">No.</th>
-                            <th>Nama</th>
-                            <th>Deskripsi</th>
-                            <th>Updated At</th>
-                            <th width="100">Aksi</th>
+                            <th class="text-center" width="10"><?= lang("Web.datatable.no") ?></th>
+                            <th><?= lang("Web.master.name") ?></th>
+                            <th><?= lang("Web.master.desc") ?></th>
+                            <th><?= lang("Web.datatable.updatedAt") ?></th>
+                            <th width="100"><?= lang("Web.datatable.action") ?></th>
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th class="text-center" width="10">No.</th>
-                            <th>Nama</th>
-                            <th>Deskripsi</th>
-                            <th>Updated At</th>
-                            <th width="100">Aksi</th>
+                            <th class="text-center" width="10"><?= lang("Web.datatable.no") ?></th>
+                            <th><?= lang("Web.master.name") ?></th>
+                            <th><?= lang("Web.master.desc") ?></th>
+                            <th><?= lang("Web.datatable.updatedAt") ?></th>
+                            <th width="100"><?= lang("Web.datatable.action") ?></th>
                         </tr>
                     </tfoot>
                 </table>

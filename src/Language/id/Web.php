@@ -13,6 +13,7 @@ return [
     'optional' => 'Opsional',
     'master' => [
         'user' => 'User',
+        'users' => 'Pengguna',
         'name' => 'Nama',
         'desc' => 'Deskripsi',
         'data' => 'Master Data',
@@ -23,4 +24,9 @@ return [
         'expired' => 'Expired',
         'hit_limit' => 'Hit Limit',
     ],
+    'datatable' => [
+        'no' => "No.",
+        'updatedAt' => "Updated At",
+        'action' => 'Aksi'
+    ]
 ];
