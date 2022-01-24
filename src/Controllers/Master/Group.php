@@ -19,6 +19,7 @@ class Group extends BaseController
             'url_delete' => herauth_web_url($this->root_view . "group/delete/"),
             'url_restore' => herauth_web_url($this->root_view . "group/restore/"),
             'url_users' => herauth_base_locale_url($this->root_view . "group/users/"),
+            'url_permissions' => herauth_base_locale_url($this->root_view . "group/permissions/"),
         ];
         return $this->view("group/index", $data);
     }
@@ -73,4 +74,20 @@ class Group extends BaseController
         return $this->view("group/users", $data);
     }
 
+    public function permissions($id = null)
+    {
+        $group = $this->model->withDeleted(true)->find($id);
+        if (!$group) {
+            throw new PageNotFoundException();
+        }
+
+        $data = [
+            'page_title' => lang("Web.master.group")." ".lang("Web.master.permission")." " . $group->nama,
+            'group' => $group,
+            'url_save' => herauth_web_url($this->root_view . "group/save_permissions/".$id),
+            'url_permissions' => herauth_web_url($this->root_view . "permission"),
+            'url_group_permissions' => herauth_web_url($this->root_view . "group/permissions/".$id),
+        ];
+        return $this->view("group/permission", $data);
+    }
 }

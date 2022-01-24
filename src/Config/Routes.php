@@ -26,6 +26,7 @@ $routes->group('herauth',function($routes){
                 $routes->group('group', function ($routes) {
                     $routes->get('','Group::index');
                     $routes->get('users/(:segment)','Group::users/$1');
+                    $routes->get('permissions/(:segment)','Group::permissions/$1');
                     $routes->get('add','Group::add');
                     $routes->get('edit/(:segment)','Group::edit/$1');
                 });
@@ -38,6 +39,7 @@ $routes->group('herauth',function($routes){
                     $routes->get('','Client::index');
                     $routes->get('add','Client::add');
                     $routes->get('edit/(:segment)','Client::edit/$1');
+                    $routes->get('permissions/(:segment)','Client::permissions/$1');
                 });
                 $routes->group('admin', function ($routes) {
                     $routes->get('','Admin::index');

@@ -9,6 +9,13 @@ class Permission extends BaseResourceApi
 {
     protected $modelName = PermissionModel::class;
 
+    public function index()
+    {
+        $data = $this->getDataRequest();
+        $groups = $this->model->select("id,nama,deskripsi")->findAll();
+        return $this->respond(["status" => true, "message" => lang("Api.successRetrieveRequest", [lang("Web.master.permission")]), "data" => $groups], 200);
+    }
+
     public function datatable()
     {
         $data = $this->getDataRequest();

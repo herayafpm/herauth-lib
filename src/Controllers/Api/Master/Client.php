@@ -4,6 +4,7 @@ namespace Raydragneel\HerauthLib\Controllers\Api\Master;
 
 use Raydragneel\HerauthLib\Controllers\Api\BaseResourceApi;
 use Raydragneel\HerauthLib\Models\ClientModel;
+use Raydragneel\HerauthLib\Models\ClientPermissionModel;
 
 class Client extends BaseResourceApi
 {
@@ -137,6 +138,42 @@ class Client extends BaseResourceApi
             } else {
                 return $this->respond(["status" => false, "message" => lang("Api.failRegenerateKeyRequest", [lang("Web.master.client")]), "data" => []], 400);
             }
+        }
+        return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.client")]), "data" => []], 404);
+    }
+
+    public function permissions($id = null)
+    {
+        $client = $this->model->withDeleted(true)->find($id);
+        if ($client) {
+            return $this->respond(["status" => true, "message" => lang("Api.successRetrieveRequest", [lang("Web.master.client")]), "data" => $client->permissions], 200);
+        }
+        return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.client")]), "data" => []], 404);
+    }
+
+    public function save_permissions($id = null)
+    {
+        $data = $this->getDataRequest();
+        $client = $this->model->withDeleted(true)->find($id);
+        if ($client) {
+            $client_permission_model = model(ClientPermissionModel::class);
+            foreach ($data['permissions'] as $permission) {
+                $client_permission = $client_permission_model->where(['client_id' => $client->id, 'permission_id' => $permission['id']])->withDeleted(true)->first();
+                if ($client_permission) {
+                    if ($permission['checked']) {
+                        $client_permission_model->update($client_permission->id, [
+                            'deleted_at' => null
+                        ]);
+                    } else {
+                        $client_permission_model->delete($client_permission->id);
+                    }
+                } else {
+                    if ($permission['checked']) {
+                        $client_permission_model->save(['client_id' => $client->id, 'permission_id' => $permission['id']]);
+                    }
+                }
+            }
+            return $this->respond(["status" => true, "message" => lang("Api.successSaveClientRequest",[lang("Web.master.permission")]), "data" => []], 200);
         }
         return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.client")]), "data" => []], 404);
     }

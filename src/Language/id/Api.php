@@ -7,6 +7,8 @@ return [
     'failAddRequest' => 'Gagal menambah {0}',
     'successSaveGroupRequest' => 'Berhasil menyimpan group {0}',
     'failSaveGroupRequest' => 'Gagal menyimpan group {0}',
+    'successSaveClientRequest' => 'Berhasil menyimpan client {0}',
+    'failSaveClientRequest' => 'Gagal menyimpan client {0}',
     'successEditRequest' => 'Berhasil mengupdate {0}',
     'failEditRequest' => 'Gagal mengupdate {0}',
     'successDeleteRequest' => 'Berhasil menghapus {0}',

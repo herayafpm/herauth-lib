@@ -212,6 +212,11 @@
                                 <i class="fas fa-fw fa-users"></i>
                             </a>
                             `
+                        html += `
+                            <a role="button" class="btn btn-sm btn-info" href="<?= $url_permissions ?>${row.id}">
+                                <i class="fas fa-fw fa-lock"></i>
+                            </a>
+                            `
                         if (row.nama !== 'superadmin') {
                             html += `
                             <a role="button" class="btn btn-sm btn-primary" href="<?= $url_edit ?>${row.id}">

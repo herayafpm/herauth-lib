@@ -19,6 +19,7 @@ class Client extends BaseController
             'url_delete' => herauth_web_url($this->root_view . "client/delete/"),
             'url_restore' => herauth_web_url($this->root_view . "client/restore/"),
             'url_regenerate_key' => herauth_web_url($this->root_view . "client/regenerate_key/"),
+            'url_permissions' => herauth_base_locale_url($this->root_view . "client/permissions/"),
         ];
         return $this->view("client/index", $data);
     }
@@ -53,6 +54,23 @@ class Client extends BaseController
             'url_edit' => herauth_web_url($this->root_view . "client/edit/".$id),
         ];
         return $this->view("client/edit", $data);
+    }
+
+    public function permissions($id = null)
+    {
+        $client = $this->model->withDeleted(true)->find($id);
+        if (!$client) {
+            throw new PageNotFoundException();
+        }
+
+        $data = [
+            'page_title' => lang("Web.master.client")." ".lang("Web.master.permission")." " . $client->nama,
+            'client' => $client,
+            'url_save' => herauth_web_url($this->root_view . "client/save_permissions/".$id),
+            'url_permissions' => herauth_web_url($this->root_view . "permission"),
+            'url_client_permissions' => herauth_web_url($this->root_view . "client/permissions/".$id),
+        ];
+        return $this->view("client/permission", $data);
     }
 
 }

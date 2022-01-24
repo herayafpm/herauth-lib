@@ -165,4 +165,11 @@ class ClientEntity extends Entity
         }
         return null;
     }
+
+    public function getPermissions()
+    {
+        $client_permission_model = model(ClientPermissionModel::class);
+        return $client_permission_model->where(['client_id' => $this->attributes['id']])->findAll();
+    }
+
 }

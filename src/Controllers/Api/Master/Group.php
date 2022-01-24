@@ -4,6 +4,7 @@ namespace Raydragneel\HerauthLib\Controllers\Api\Master;
 
 use Raydragneel\HerauthLib\Controllers\Api\BaseResourceApi;
 use Raydragneel\HerauthLib\Models\GroupModel;
+use Raydragneel\HerauthLib\Models\GroupPermissionModel;
 use Raydragneel\HerauthLib\Models\UserGroupModel;
 
 class Group extends BaseResourceApi
@@ -182,5 +183,41 @@ class Group extends BaseResourceApi
             }
         }
         return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.user") . " " . lang("Web.master.group")]), "data" => []], 404);
+    }
+
+    public function permissions($id = null)
+    {
+        $group = $this->model->withDeleted(true)->find($id);
+        if ($group) {
+            return $this->respond(["status" => true, "message" => lang("Api.successRetrieveRequest", [lang("Web.master.group")]), "data" => $group[0]->permissions], 200);
+        }
+        return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.group")]), "data" => []], 404);
+    }
+
+    public function save_permissions($id = null)
+    {
+        $data = $this->getDataRequest();
+        $group = $this->model->withDeleted(true)->find($id);
+        if ($group) {
+            $group_permission_model = model(GroupPermissionModel::class);
+            foreach ($data['permissions'] as $permission) {
+                $group_permission = $group_permission_model->where(['group_id' => $group->id, 'permission_id' => $permission['id']])->withDeleted(true)->first();
+                if ($group_permission) {
+                    if ($permission['checked']) {
+                        $group_permission_model->update($group_permission->id, [
+                            'deleted_at' => null
+                        ]);
+                    } else {
+                        $group_permission_model->delete($group_permission->id);
+                    }
+                } else {
+                    if ($permission['checked']) {
+                        $group_permission_model->save(['group_id' => $group->id, 'permission_id' => $permission['id']]);
+                    }
+                }
+            }
+            return $this->respond(["status" => true, "message" => lang("Api.successSaveGroupRequest",[lang("Web.master.permission")]), "data" => []], 200);
+        }
+        return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.group")]), "data" => []], 404);
     }
 }

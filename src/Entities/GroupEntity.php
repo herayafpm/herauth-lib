@@ -3,6 +3,7 @@
 namespace Raydragneel\HerauthLib\Entities;
 
 use CodeIgniter\Entity\Entity;
+use Raydragneel\HerauthLib\Models\GroupPermissionModel;
 
 class GroupEntity extends Entity
 {
@@ -17,4 +18,11 @@ class GroupEntity extends Entity
         'deleted_at',
     ];
     protected $casts   = [];
+
+    public function getPermissions()
+    {
+        $group_permission_model = model(GroupPermissionModel::class);
+        return $group_permission_model->where(['group_id' => $this->attributes['id']])->findAll();
+    }
+
 }
