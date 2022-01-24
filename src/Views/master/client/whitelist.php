@@ -168,9 +168,9 @@
                     if (res.data.status) {
                         this.alertType = 'success'
                         this.messageApi = res.data.message
-                        // setTimeout(() => {
-                        //     window.location.reload()
-                        // }, 1000);
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 1000);
                     }
                 }
                 window.scrollTo(0, 0)
