@@ -42,7 +42,7 @@ class Group extends BaseController
     }
     public function edit($id = null)
     {
-        $group = $this->model->find($id);
+        $group = $this->model->withDeleted(true)->find($id);
         if (!$group) {
             throw new PageNotFoundException();
         }

@@ -24,7 +24,7 @@ class ClientWhitelist extends Migration
             'deleted_at'       => ['type' => 'datetime', 'null' => true],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('client_id', 'herauth_client', 'id', '', '');
+        $this->forge->addForeignKey('client_id', 'herauth_client', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('herauth_client_whitelist');
     }
 

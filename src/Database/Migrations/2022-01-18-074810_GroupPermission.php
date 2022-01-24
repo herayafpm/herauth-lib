@@ -22,8 +22,8 @@ class GroupPermission extends Migration
             'deleted_at'       => ['type' => 'datetime', 'null' => true],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('group_id', 'herauth_group', 'id', '', '');
-        $this->forge->addForeignKey('permission_id', 'herauth_permission', 'id', '', '');
+        $this->forge->addForeignKey('group_id', 'herauth_group', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('permission_id', 'herauth_permission', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('herauth_group_permission');
     }
 

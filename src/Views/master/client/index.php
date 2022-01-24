@@ -10,7 +10,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <a role="button" class="btn btn-sm btn-success" href="<?= $url_add ?>">Tambah Permission</a>
+                <a role="button" class="btn btn-sm btn-success" href="<?= $url_add ?>">Tambah Client</a>
             </div>
             <div class="card-body">
                 <table id="tableMaster" class="table table-bordered table-striped">
@@ -18,7 +18,8 @@
                         <tr>
                             <th class="text-center" width="10">No.</th>
                             <th>Nama</th>
-                            <th>Deskripsi</th>
+                            <th>Expired</th>
+                            <th>Hit Limit</th>
                             <th>Updated At</th>
                             <th width="100">Aksi</th>
                         </tr>
@@ -29,7 +30,8 @@
                         <tr>
                             <th class="text-center" width="10">No.</th>
                             <th>Nama</th>
-                            <th>Deskripsi</th>
+                            <th>Expired</th>
+                            <th>Hit Limit</th>
                             <th>Updated At</th>
                             <th width="100">Aksi</th>
                         </tr>
@@ -161,7 +163,7 @@
                 [0, 'desc']
             ], // Default sortingnya berdasarkan kolom / field ke 0 (paling pertama)
             "autoWidth": false,
-            "lenthMenu": [
+            "lengthMenu": [
                 [10, 25, 50, -1],
                 ['10 ' + herlangjs("Web.datatable.row"), '25 ' + herlangjs("Web.datatable.row"), '50 ' + herlangjs("Web.datatable.row"), herlangjs("Web.datatable.showAll")]
             ],
@@ -192,15 +194,21 @@
                     "data": "nama",
                 },
                 {
-                    "data": "deskripsi",
+                    "data": "expired",
                     "render": function(dt, type, row, meta) {
-                        return row.deskripsi === null ? '-' : row.deskripsi
+                        return row.expired === null ? '-' : toLocaleDate(row.expired.date, 'LL');
                     }
                 },
                 {
-                    "data": "updated_at.date",
+                    "data": "hit_limit",
                     "render": function(dt, type, row, meta) {
-                        return toLocaleDate(row.updated_at.date, 'LLL');
+                        return row.hit_limit === null ? '-' : row.hit_limit;
+                    }
+                },
+                {
+                    "data": "updated_at",
+                    "render": function(dt, type, row, meta) {
+                        return row.updated_at === null ? '-' : toLocaleDate(row.updated_at.date, 'LLL');
                     }
                 },
                 {
@@ -244,7 +252,7 @@
         $("#tableMaster").on('click', '.hapusData', function() {
             var id = $(this).data('id')
             Swal.fire({
-                title: herlangjs('Web.confirmDelete', herlangjs('Web.master.permission')),
+                title: herlangjs('Web.confirmDelete', herlangjs('Web.master.client')),
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
@@ -261,7 +269,7 @@
         $("#tableMaster").on('click', '.restoreData', function() {
             var id = $(this).data('id')
             Swal.fire({
-                title: herlangjs('Web.confirmRestore', herlangjs('Web.master.permission')),
+                title: herlangjs('Web.confirmRestore', herlangjs('Web.master.client')),
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -278,7 +286,7 @@
         $("#tableMaster").on('click', '.purgeData', function() {
             var id = $(this).data('id')
             Swal.fire({
-                title: herlangjs('Web.confirmPurge', herlangjs('Web.master.permission')),
+                title: herlangjs('Web.confirmPurge', herlangjs('Web.master.client')),
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',

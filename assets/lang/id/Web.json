@@ -23,6 +23,7 @@
     },
     "master":{
         "group":"Group",
-        "permission":"Permission"
+        "permission":"Permission",
+        "client":"Client"
     }
 }

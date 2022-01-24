@@ -18,5 +18,7 @@ return [
         'permission' => 'Permission',
         'client' => 'Client',
         'admin' => 'Admin',
+        'expired' => 'Expired',
+        'hit_limit' => 'Hit Limit',
     ],
 ];

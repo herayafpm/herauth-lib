@@ -46,7 +46,7 @@ class Permission extends BaseResourceApi
     }
     public function edit($id = null)
     {
-        $permission = $this->model->find($id);
+        $permission = $this->model->withDeleted(true)->find($id);
         if (!$permission) {
             return $this->response->setStatusCode(404)->setJSON(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.permission")]), "data" => []]);
         }

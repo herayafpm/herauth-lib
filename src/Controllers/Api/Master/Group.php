@@ -46,7 +46,7 @@ class Group extends BaseResourceApi
     }
     public function edit($id = null)
     {
-        $group = $this->model->find($id);
+        $group = $this->model->withDeleted(true)->find($id);
         if (!$group) {
             return $this->response->setStatusCode(404)->setJSON(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.group")]), "data" => []]);
         }

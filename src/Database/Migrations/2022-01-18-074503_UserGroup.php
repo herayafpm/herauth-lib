@@ -25,7 +25,7 @@ class UserGroup extends Migration
             'deleted_at'       => ['type' => 'datetime', 'null' => true],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('group_id', 'herauth_group', 'id', '', '');
+        $this->forge->addForeignKey('group_id', 'herauth_group', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('herauth_user_group');
     }
 

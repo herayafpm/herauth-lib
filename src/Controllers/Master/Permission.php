@@ -42,7 +42,7 @@ class Permission extends BaseController
     }
     public function edit($id = null)
     {
-        $permission = $this->model->find($id);
+        $permission = $this->model->withDeleted(true)->find($id);
         if (!$permission) {
             throw new PageNotFoundException();
         }

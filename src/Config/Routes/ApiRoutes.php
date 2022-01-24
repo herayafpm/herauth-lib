@@ -17,4 +17,12 @@ $routes->group('master', ['namespace' => $routes->namespace . "\Master", 'filter
         $routes->post('restore/(:segment)', 'Permission::restore/$1');
         $routes->post('delete/(:segment)', 'Permission::delete/$1');
     });
+    $routes->group('client', function ($routes) {
+        $routes->post('datatable', 'Client::datatable');
+        $routes->post('add', 'Client::add');
+        $routes->post('edit/(:segment)', 'Client::edit/$1');
+        $routes->post('regenerate_key/(:segment)', 'Client::regenerate_key/$1');
+        $routes->post('restore/(:segment)', 'Client::restore/$1');
+        $routes->post('delete/(:segment)', 'Client::delete/$1');
+    });
 });
