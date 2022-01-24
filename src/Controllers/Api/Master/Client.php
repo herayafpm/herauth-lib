@@ -195,8 +195,7 @@ class Client extends BaseResourceApi
                         'deleted_at' => null
                     ])->update();
                 }else{
-                    $client_whitelist = $client_whitelist_model->where(['client_id' => $id,'whitelist_key' => $web['whitelist_key']])->withDeleted(true)->first();
-                    var_dump($client_whitelist);
+                    $client_whitelist = $client_whitelist_model->where(['client_id' => $id,'whitelist_key' => $web['whitelist_key'],'whitelist_type' => 'ip'])->withDeleted(true)->first();
                     if($client_whitelist){
                         $client_whitelist_model->where(['client_id' => $id,'id' => $client_whitelist->id])->set([
                             'whitelist_name' => $web['whitelist_name'],
@@ -224,7 +223,7 @@ class Client extends BaseResourceApi
                         'deleted_at' => null
                     ])->update();
                 }else{
-                    $client_whitelist = $client_whitelist_model->where(['client_id' => $id,'whitelist_key' => $android['whitelist_key']])->withDeleted(true)->first();
+                    $client_whitelist = $client_whitelist_model->where(['client_id' => $id,'whitelist_key' => $android['whitelist_key'],'whitelist_type' => 'android'])->withDeleted(true)->first();
                     if($client_whitelist){
                         $client_whitelist_model->where(['client_id' => $id,'id' => $client_whitelist->id])->set([
                             'whitelist_name' => $android['whitelist_name'],
@@ -252,7 +251,7 @@ class Client extends BaseResourceApi
                         'deleted_at' => null
                     ])->update();
                 }else{
-                    $client_whitelist = $client_whitelist_model->where(['client_id' => $id,'whitelist_key' => $ios['whitelist_key']])->withDeleted(true)->first();
+                    $client_whitelist = $client_whitelist_model->where(['client_id' => $id,'whitelist_key' => $ios['whitelist_key'],'whitelist_type' => 'ios'])->withDeleted(true)->first();
                     if($client_whitelist){
                         $client_whitelist_model->where(['client_id' => $id,'id' => $client_whitelist->id])->set([
                             'whitelist_name' => $ios['whitelist_name'],
