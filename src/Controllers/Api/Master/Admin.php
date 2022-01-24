@@ -4,6 +4,7 @@ namespace Raydragneel\HerauthLib\Controllers\Api\Master;
 
 use Raydragneel\HerauthLib\Controllers\Api\BaseResourceApi;
 use Raydragneel\HerauthLib\Models\AdminModel;
+use Raydragneel\HerauthLib\Models\UserGroupModel;
 
 class Admin extends BaseResourceApi
 {
@@ -89,7 +90,7 @@ class Admin extends BaseResourceApi
             'password' => $data['password'],
         ];
 
-        if(empty($data['password'])){
+        if (empty($data['password'])) {
             unset($update_data['password']);
         }
 
@@ -140,6 +141,41 @@ class Admin extends BaseResourceApi
             } else {
                 return $this->respond(["status" => false, "message" => lang("Api.failRestoreRequest", [lang("Web.master.admin")]), "data" => []], 400);
             }
+        }
+        return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.admin")]), "data" => []], 404);
+    }
+    public function groups($id = null)
+    {
+        $admin = $this->model->withDeleted(true)->find($id);
+        if ($admin) {
+            return $this->respond(["status" => true, "message" => lang("Api.successRetrieveRequest", [lang("Web.master.admin")]), "data" => $admin[0]->groups], 200);
+        }
+        return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.admin")]), "data" => []], 404);
+    }
+
+    public function save_group($id = null)
+    {
+        $data = $this->getDataRequest();
+        $admin = $this->model->withDeleted(true)->find($id);
+        if ($admin) {
+            $user_group_model = model(UserGroupModel::class);
+            foreach ($data['groups'] as $group) {
+                $user_group = $user_group_model->where(['username' => $admin->username, 'group_id' => $group['id']])->withDeleted(true)->first();
+                if ($user_group) {
+                    if ($group['checked']) {
+                        $user_group_model->update($user_group->id, [
+                            'deleted_at' => null
+                        ]);
+                    } else {
+                        $user_group_model->delete($user_group->id);
+                    }
+                } else {
+                    if ($group['checked']) {
+                        $user_group_model->save(['username' => $admin->username, 'group_id' => $group['id']]);
+                    }
+                }
+            }
+            return $this->respond(["status" => true, "message" => lang("Api.successSaveGroupRequest",[lang("Web.master.admin")]), "data" => []], 200);
         }
         return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.admin")]), "data" => []], 404);
     }

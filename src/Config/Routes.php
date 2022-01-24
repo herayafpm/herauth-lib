@@ -40,12 +40,16 @@ $routes->group('herauth',function($routes){
                 });
                 $routes->group('admin', function ($routes) {
                     $routes->get('','Admin::index');
+                    $routes->group('group/(:segment)', function ($routes) {
+                        $routes->get('','Admin::group/$1');
+                        $routes->get('save','Admin::save_group/$1');
+                    });
                     $routes->get('add','Admin::add');
                     $routes->get('edit/(:segment)','Admin::edit/$1');
                 });
             });
             $routes->get('','Home::index');
-            $routes->get('(:any)','Home::index/$1');
+            // $routes->get('(:any)','Home::index/$1');
         });
     });
     

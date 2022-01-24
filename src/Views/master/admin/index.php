@@ -10,7 +10,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <a role="button" class="btn btn-sm btn-success" href="<?= $url_add ?>"><?=lang("Web.add")." ".lang("Web.master.admin")?></a>
+                <a role="button" class="btn btn-sm btn-success" href="<?= $url_add ?>"><?= lang("Web.add") . " " . lang("Web.master.admin") ?></a>
             </div>
             <div class="card-body">
                 <table id="tableMaster" class="table table-bordered table-striped">
@@ -142,7 +142,7 @@
                 "zeroRecords": herlangjs("Web.datatable.data") + " " + herlangjs("Web.notFound"),
                 "info": herlangjs("Web.datatable.show") + " " + herlangjs("Web.datatable.page") + " _PAGE_ " + herlangjs("Web.datatable.from") + " _PAGES_",
                 "infoEmpty": herlangjs("Web.datatable.data") + " " + herlangjs("Web.empty"),
-                "infoFiltered": "("+herlangjs("Web.datatable.di")+herlangjs("Web.datatable.filter")+" "+herlangjs("Web.datatable.from")+" _MAX_ "+herlangjs("Web.datatable.total")+" "+herlangjs("Web.datatable.data")+")"
+                "infoFiltered": "(" + herlangjs("Web.datatable.di") + herlangjs("Web.datatable.filter") + " " + herlangjs("Web.datatable.from") + " _MAX_ " + herlangjs("Web.datatable.total") + " " + herlangjs("Web.datatable.data") + ")"
             },
             "dom": 'Bfrtip',
             "buttons": [
@@ -163,7 +163,7 @@
             "autoWidth": false,
             "lengthMenu": [
                 [10, 25, 50, -1],
-                ['10 '+herlangjs("Web.datatable.row"), '25 '+herlangjs("Web.datatable.row"), '50 '+herlangjs("Web.datatable.row"), herlangjs("Web.datatable.showAll")]
+                ['10 ' + herlangjs("Web.datatable.row"), '25 ' + herlangjs("Web.datatable.row"), '50 ' + herlangjs("Web.datatable.row"), herlangjs("Web.datatable.showAll")]
             ],
             "ajax": {
                 "url": "<?= $url_datatable ?>", // URL file untuk proses select datanya
@@ -181,7 +181,7 @@
             'columnDefs': [{
                 "targets": [4],
                 "orderable": false
-            },{
+            }, {
                 "targets": [0],
                 "className": 'text-center'
             }],
@@ -204,6 +204,11 @@
                     "data": "id",
                     "render": function(dt, type, row, meta) { // Tampilkan kolom aksi
                         var html = '';
+                        html += `
+                            <a role="button" class="btn btn-sm btn-info" href="<?= $url_group ?>${row.id}">
+                                <i class="fas fa-fw fa-layer-group"></i>
+                            </a>
+                            `
                         if (row.username !== 'superadmin') {
                             html += `
                             <a role="button" class="btn btn-sm btn-primary" href="<?= $url_edit ?>${row.id}">
@@ -226,8 +231,6 @@
                             </a>
                             `
                             }
-                        } else {
-                            html += '-'
                         }
                         return html
                     }

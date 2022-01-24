@@ -4,6 +4,7 @@ $routes->group('auth', function ($routes) {
 });
 $routes->group('master', ['namespace' => $routes->namespace . "\Master", 'filter' => 'auth_api_filter'], function ($routes) {
     $routes->group('group', function ($routes) {
+        $routes->post('', 'Group::index');
         $routes->post('datatable', 'Group::datatable');
         $routes->post('add', 'Group::add');
         $routes->post('edit/(:segment)', 'Group::edit/$1');
@@ -26,6 +27,8 @@ $routes->group('master', ['namespace' => $routes->namespace . "\Master", 'filter
         $routes->post('delete/(:segment)', 'Client::delete/$1');
     });
     $routes->group('admin', function ($routes) {
+        $routes->post('groups', 'Admin::groups');
+        $routes->post('save_group/(:segment)', 'Admin::save_group/$1');
         $routes->post('datatable', 'Admin::datatable');
         $routes->post('add', 'Admin::add');
         $routes->post('edit/(:segment)', 'Admin::edit/$1');

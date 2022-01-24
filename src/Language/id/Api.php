@@ -5,6 +5,8 @@ return [
     'failRetrieveRequest' => 'Gagal mengambil {0}',
     'successAddRequest' => 'Berhasil menambah {0}',
     'failAddRequest' => 'Gagal menambah {0}',
+    'successSaveGroupRequest' => 'Berhasil menyimpan group {0}',
+    'failSaveGroupRequest' => 'Gagal menyimpan group {0}',
     'successEditRequest' => 'Berhasil mengupdate {0}',
     'failEditRequest' => 'Gagal mengupdate {0}',
     'successDeleteRequest' => 'Berhasil menghapus {0}',

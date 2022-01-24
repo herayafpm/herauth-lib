@@ -18,6 +18,7 @@ class Admin extends BaseController
             'url_edit' => herauth_base_locale_url($this->root_view . "admin/edit/"),
             'url_delete' => herauth_web_url($this->root_view . "admin/delete/"),
             'url_restore' => herauth_web_url($this->root_view . "admin/restore/"),
+            'url_group' => herauth_base_locale_url($this->root_view . "admin/group/"),
         ];
         return $this->view("admin/index", $data);
     }
@@ -52,6 +53,22 @@ class Admin extends BaseController
             'url_edit' => herauth_web_url($this->root_view . "admin/edit/".$id),
         ];
         return $this->view("admin/edit", $data);
+    }
+    public function group($id = null)
+    {
+        $admin = $this->model->withDeleted(true)->find($id);
+        if (!$admin) {
+            throw new PageNotFoundException();
+        }
+
+        $data = [
+            'page_title' => lang("Web.master.group")." ".lang("Web.master.admin")." " . $admin->nama,
+            'admin' => $admin,
+            'url_save' => herauth_web_url($this->root_view . "admin/save_group/".$id),
+            'url_groups' => herauth_web_url($this->root_view . "group"),
+            'url_admin_groups' => herauth_web_url($this->root_view . "admin/groups"),
+        ];
+        return $this->view("admin/group", $data);
     }
 
 }
