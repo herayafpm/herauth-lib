@@ -244,7 +244,7 @@ class Client extends BaseResourceApi
                 }
             }
             foreach ($data['ios'] as $ios) {
-                if((int)$ios['id'] !== "0"){
+                if((int)$ios['id'] !== 0){
                     $client_whitelist_model->where(['client_id' => $id,'id' => $ios['id']])->set([
                         'whitelist_name' => $ios['whitelist_name'],
                         'whitelist_key' => $ios['whitelist_key'],
