@@ -3,6 +3,7 @@
 namespace Raydragneel\HerauthLib\Controllers\Api;
 
 use DomainException;
+use Config\Services;
 use Raydragneel\HerauthLib\Entities\AdminEntity;
 use Raydragneel\HerauthLib\Libraries\ClaJWT;
 use Raydragneel\HerauthLib\Models\AdminModel;
@@ -40,6 +41,12 @@ class Auth extends BaseResourceApi
     public function login()
     {
 
+        // $throttler = Services::throttler();
+        // $key_throttler = md5($this->request->getIPAddress());
+        // if ($throttler->check($key_throttler, 3, MINUTE) === false) {
+        //     return $this->response->setStatusCode(429)->setJSON(["status" => false, "message" => lang("Api.tooManyAttemptRequest"), "data" => []]);
+        // }
+        herauth_grant("auth.login");
         try {
             $rules = $this->rules_login();
         } catch (\DomainException $th) {
@@ -62,7 +69,7 @@ class Auth extends BaseResourceApi
                 $data_res['redir'] = herauth_base_url("");
             } else if ($this->jenis_akses === 'api') {
                 $jwt = ClaJWT::encode(['username' => $username], null, false, false);
-                if($jwt){
+                if ($jwt) {
                     $data_res = $jwt;
                 }
             }

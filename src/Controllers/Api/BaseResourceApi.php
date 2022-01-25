@@ -32,11 +32,13 @@ class BaseResourceApi extends ResourceController
             $this->session = session();
             if($this->session->has('username')){
                 $_user = $admin_model->cekUser($this->session->get('username'));
+                $request->_user = $_user;
                 $this->__user = $_user;
             }
         }else{
             if($request->__username ?? '' !== ''){
                 $_user = $admin_model->cekUser($request->__username);
+                $request->_user = $_user;
                 $this->__user = $_user;
             }
         }
@@ -103,6 +105,33 @@ class BaseResourceApi extends ResourceController
     {
         if($model === null){
             $model = $this->model;
+        }
+        $rules = [
+            'length' => [
+                'label'  => "Length",
+                'rules'  => "required",
+                'errors' => []
+            ],
+            'start' => [
+                'label'  => "Start",
+                'rules'  => "required",
+                'errors' => []
+            ],
+            'order' => [
+                'label'  => "Order",
+                'rules'  => "required",
+                'errors' => []
+            ],
+            'columns' => [
+                'label'  => "Columns",
+                'rules'  => "required",
+                'errors' => []
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $this->response->setStatusCode(400)->setJSON(["status" => false, "message" => lang("Validation.errorValidation"), "data" => $this->validator->getErrors()])->send();
+            die();
         }
         $data = $this->getDataRequest();
         $limit = $data['length']; // Ambil data limit per page

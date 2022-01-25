@@ -42,8 +42,8 @@
         permissions: [],
         group_permissions: []
     }
-    createdVue = function() {
-        this.getGroupPermissions()
+    createdVue = async function() {
+        await this.getGroupPermissions()
         this.getPermissions()
     }
     methodsVue = {
@@ -96,7 +96,7 @@
                         this.messageApi = res.data.message
                         var data = res.data.data.map((el) => {
                             el.checked = false
-                            if (this.group_permissions.filter((elag) => elag.permission_id === el.id).length > 0) {
+                            if (this.group_permissions.filter((elag) => elag.permission_id == el.id).length > 0) {
                                 el.checked = true
                             }
                             return el

@@ -5,9 +5,9 @@ $routes->group('auth', function ($routes) {
 $routes->group('master', ['namespace' => $routes->namespace . "\Master", 'filter' => 'auth_api_filter'], function ($routes) {
     $routes->group('group', function ($routes) {
         $routes->post('', 'Group::index');
-        $routes->post('permissions/(:segment)', 'Group::permissions/$1');
         $routes->post('datatable', 'Group::datatable');
         $routes->post('add', 'Group::add');
+        $routes->post('permissions/(:segment)', 'Group::permissions/$1');
         $routes->post('edit/(:segment)', 'Group::edit/$1');
         $routes->post('restore/(:segment)', 'Group::restore/$1');
         $routes->post('delete/(:segment)', 'Group::delete/$1');
@@ -25,9 +25,9 @@ $routes->group('master', ['namespace' => $routes->namespace . "\Master", 'filter
         $routes->post('delete/(:segment)', 'Permission::delete/$1');
     });
     $routes->group('client', function ($routes) {
-        $routes->post('permissions/(:segment)', 'Client::permissions/$1');
         $routes->post('datatable', 'Client::datatable');
         $routes->post('add', 'Client::add');
+        $routes->post('permissions/(:segment)', 'Client::permissions/$1');
         $routes->post('edit/(:segment)', 'Client::edit/$1');
         $routes->post('regenerate_key/(:segment)', 'Client::regenerate_key/$1');
         $routes->post('restore/(:segment)', 'Client::restore/$1');
@@ -36,13 +36,13 @@ $routes->group('master', ['namespace' => $routes->namespace . "\Master", 'filter
         $routes->post('save_whitelists/(:segment)', 'Client::save_whitelists/$1');
     });
     $routes->group('admin', function ($routes) {
-        $routes->post('groups', 'Admin::groups');
-        $routes->post('save_group/(:segment)', 'Admin::save_group/$1');
         $routes->post('datatable', 'Admin::datatable');
         $routes->post('add', 'Admin::add');
         $routes->post('edit/(:segment)', 'Admin::edit/$1');
+        $routes->post('groups/(:segment)', 'Admin::groups/$1');
         $routes->post('restore/(:segment)', 'Admin::restore/$1');
         $routes->post('delete/(:segment)', 'Admin::delete/$1');
+        $routes->post('save_group/(:segment)', 'Admin::save_group/$1');
     });
 });
 

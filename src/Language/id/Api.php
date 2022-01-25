@@ -20,9 +20,13 @@ return [
     'successPurgeRequest' => 'Berhasil menghapus {0} selamanya',
     'failPurgeRequest' => 'Gagal menghapus {0} selamanya',
     'ApiRequestNotFound' => '{0} tidak ditemukan.',
+    'tooManyAttemptRequest' => 'Terlalu banyak permintaan, tunggu 1 menit.',
     'validation' => [
         'master' => [
             'nama' => 'Nama {0}'
         ],
+    ],
+    'user' => [
+        'permissionNotFound' => 'Permission Akun tidak ada'
     ]
 ];

@@ -1,5 +1,8 @@
 <?php
 
+use Raydragneel\HerauthLib\Filters\AfterRequestFilter;
+use Raydragneel\HerauthLib\Models\PermissionModel;
+
 if (!function_exists('herauth_base_url')) {
     function herauth_base_url($url = '')
     {
@@ -76,5 +79,59 @@ if (!function_exists('herauth_locale_text')) {
                 break;
         }
         return $locale_text;
+    }
+}
+if (!function_exists('herauth_grant')) {
+    function herauth_grant($perm, $type = 'api')
+    {
+        $permission_model = model(PermissionModel::class);
+        $permission = $permission_model->findPermissionByName($perm);
+        $request = service('request');
+        if ($permission) {
+            $segment = 0;
+            if ($request->uri->getSegments()[0] === 'herauth') {
+                $segment = 1;
+            }
+            if ($request->uri->getSegments()[$segment] === 'api') {
+                $type = 'api';
+                if ((bool) $permission->must_login) {
+                    if ($request->client_data->hasPermission($perm)) {
+                        if(isset($request->_user)){
+                            if($request->_user->hasPermission($perm)){
+                                return true;
+                            }
+                        }
+                    }
+                } else {
+                    if ($request->client_data->hasPermission($perm)) {
+                        return true;
+                    }
+                }
+            } else {
+                $session = service('session');
+                if ($session->has('username')) {
+                    $request->jenis_akses = 'web';
+                    if ($request->_user->hasPermission($perm)) {
+                        return true;
+                    }
+                }else if(!(bool) $permission->must_login){
+                    return true;
+                }
+            }
+        }
+        $response = service('response');
+        $data_res['status'] = false;
+        $data_res['message'] = lang("Filters.notAuthorized");
+        $data_res['data'] = [];
+        $after_request_filter = new AfterRequestFilter();
+        $response = $response->setStatusCode(401)->setJSON($data_res);
+        if ($type === 'page') {
+            $after_request_filter->after($request, $response);
+            $configHerauth = config("Herauth");
+            echo view($configHerauth->unauthorizedPageView);
+        } else {
+            $after_request_filter->after($request, $response)->send();
+        }
+        die();
     }
 }

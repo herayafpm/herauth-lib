@@ -11,6 +11,7 @@ class Permission extends BaseController
 
     public function index()
     {
+        herauth_grant('permission.view_index','page');
         $data = [
             'page_title' => lang("Web.master.permission"),
             'url_datatable' => herauth_web_url($this->root_view . "permission/datatable"),
@@ -22,17 +23,9 @@ class Permission extends BaseController
         return $this->view("permission/index", $data);
     }
 
-    public function list()
-    {
-        return view($this->root_view . "permission/table", [
-            '_json' => $this->getDataRequest(),
-            'url_delete' => herauth_web_url($this->root_view . "permission/delete/"),
-            'url_restore' => herauth_web_url($this->root_view . "permission/restore/")
-        ]);
-    }
-
     public function add()
     {
+        herauth_grant('permission.view_add','page');
         $data = [
             'page_title' => lang("Web.add")." ".lang("Web.master.permission"),
             'url_add' => herauth_web_url($this->root_view . "permission/add"),
@@ -41,6 +34,7 @@ class Permission extends BaseController
     }
     public function edit($id = null)
     {
+        herauth_grant('permission.view_edit','page');
         $permission = $this->model->withDeleted(true)->find($id);
         if (!$permission) {
             throw new PageNotFoundException();

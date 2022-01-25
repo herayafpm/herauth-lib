@@ -97,10 +97,10 @@ class ClientEntity extends Entity
     {
         $request = service('request');
         $agent = $request->getUserAgent();
-        $where = ['client_id' => $this->attributes['id'],'whitelist_type' => null,'whitelist_key' => null];
-        if($agent->isMobile()){
+        $where = ['client_id' => $this->attributes['id'], 'whitelist_type' => null, 'whitelist_key' => null];
+        if ($agent->isMobile()) {
             if ($agent->isMobile('android')) {
-                if(!$request->hasHeader('android-key')){
+                if (!$request->hasHeader('android-key')) {
                     throw new DomainException(lang("Filters.androidKey.IsRequired"));
                 }
                 $androidKey = $request->getHeader('android-key')->getValue() ?? '';
@@ -110,7 +110,7 @@ class ClientEntity extends Entity
                 $where['whitelist_type'] = 'android';
                 $where['whitelist_key'] = $androidKey;
             } else if ($agent->isMobile('iphone')) {
-                if(!$request->hasHeader('ios-key')){
+                if (!$request->hasHeader('ios-key')) {
                     throw new DomainException(lang("Filters.iosKey.IsRequired"));
                 }
                 $iosKey = $request->getHeader('ios-key')->getValue() ?? '';
@@ -120,7 +120,7 @@ class ClientEntity extends Entity
                 $where['whitelist_type'] = 'ios';
                 $where['whitelist_key'] = $iosKey;
             }
-        }else{
+        } else {
             $where['whitelist_type'] = 'ip';
             $where['whitelist_key'] = $request->getIPAddress();
         }
@@ -135,41 +135,45 @@ class ClientEntity extends Entity
     {
         $request = service('request');
         $agent = $request->getUserAgent();
-        $where = ['client_id' => $this->attributes['id'],'whitelist_type' => null,'whitelist_key' => null];
-        if($agent->isMobile()){
+        $where = ['client_id' => $this->attributes['id'], 'whitelist_type' => null, 'whitelist_key' => null];
+        if ($agent->isMobile()) {
             if ($agent->isMobile('android')) {
-                if($request->hasHeader('android-key')){
+                if ($request->hasHeader('android-key')) {
                     $androidKey = $request->getHeader('android-key')->getValue() ?? '';
-                    if(!empty($androidKey)){
+                    if (!empty($androidKey)) {
                         $where['whitelist_type'] = 'android';
                         $where['whitelist_key'] = $androidKey;
                     }
                 }
             } else if ($agent->isMobile('iphone')) {
-                if($request->hasHeader('ios-key')){
+                if ($request->hasHeader('ios-key')) {
                     $iosKey = $request->getHeader('ios-key')->getValue() ?? '';
-                    if(!empty($iosKey)){
+                    if (!empty($iosKey)) {
                         $where['whitelist_type'] = 'ios';
                         $where['whitelist_key'] = $iosKey;
                     }
                 }
             }
-        }else{
+        } else {
             $where['whitelist_type'] = 'ip';
             $where['whitelist_key'] = $request->getIPAddress();
         }
 
         $whitelist = $this->client_whitelist_model->where($where)->first();
         if (!empty($whitelist)) {
-            return $this->attributes['nama']." " .$whitelist->whitelist_name;
+            return $this->attributes['nama'] . " " . $whitelist->whitelist_name;
         }
         return null;
     }
 
-    public function getPermissions()
+    public function getPermissions($limit = -1, $offset = 0)
     {
         $client_permission_model = model(ClientPermissionModel::class);
-        return $client_permission_model->where(['client_id' => $this->attributes['id']])->findAll();
+        if ($limit > 0) {
+            return $client_permission_model->where(['client_id' => $this->attributes['id']])->findAll($limit,$offset);
+        } else {
+            return $client_permission_model->where(['client_id' => $this->attributes['id']])->findAll();
+        }
     }
 
     public function getClientWhitelistWeb()
@@ -185,11 +189,13 @@ class ClientEntity extends Entity
         return $this->clientWhitelist('ios');
     }
 
-    protected function clientWhitelist($type)
+    protected function clientWhitelist($type,$limit = -1, $offset = 0)
     {
         $client_whitelist_model = model(ClientWhitelistModel::class);
-        return $client_whitelist_model->select("id,whitelist_name,whitelist_key")->where(['whitelist_type' => $type])->findAll();
+        if ($limit > 0) {
+            return $client_whitelist_model->select("id,whitelist_name,whitelist_key")->where(['whitelist_type' => $type])->findAll($limit,$offset);
+        } else {
+            return $client_whitelist_model->select("id,whitelist_name,whitelist_key")->where(['whitelist_type' => $type])->findAll();
+        }
     }
-
-
 }

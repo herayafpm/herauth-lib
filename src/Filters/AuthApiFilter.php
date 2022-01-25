@@ -30,22 +30,24 @@ class AuthApiFilter implements FilterInterface
                     throw new DomainException(lang("Filters.notAuthorized"));
                 }
             } else {
-                if (!$request->hasHeader('user-key')) {
-                    throw new DomainException(lang("Filters.userKey.IsRequired"));
+                // if (!$request->hasHeader('user-key')) {
+                //     throw new DomainException(lang("Filters.userKey.IsRequired"));
+                // }
+                if($request->hasHeader('user-key')){
+                    $userKey = $request->getHeader('user-key')->getValue() ?? '';
+                    if (empty($userKey)) {
+                        throw new DomainException(lang("Filters.userKey.cannotEmpty"));
+                    }
+                    if (strpos($userKey, 'Bearer ') === false) {
+                        throw new DomainException(lang("Filters.userKey.errorStructure"));
+                    }
+                    $userKey = explode(" ", $userKey);
+                    if (sizeof($userKey) < 2) {
+                        throw new DomainException(lang("Filters.userKey.errorStructure"));
+                    }
+                    $jwt = ClaJWT::decode($userKey[1]);
+                    $request->__username = $jwt->username;
                 }
-                $userKey = $request->getHeader('user-key')->getValue() ?? '';
-                if (empty($userKey)) {
-                    throw new DomainException(lang("Filters.userKey.cannotEmpty"));
-                }
-                if (strpos($userKey, 'Bearer ') === false) {
-                    throw new DomainException(lang("Filters.userKey.errorStructure"));
-                }
-                $userKey = explode(" ", $userKey);
-                if (sizeof($userKey) < 2) {
-                    throw new DomainException(lang("Filters.userKey.errorStructure"));
-                }
-                $jwt = ClaJWT::decode($userKey[1]);
-                $request->__username = $jwt->username;
             }
         } catch (\UnexpectedValueException $th) {
             $data_res['message'] = $th->getMessage();

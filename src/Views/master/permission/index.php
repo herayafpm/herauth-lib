@@ -19,6 +19,7 @@
                             <th class="text-center" width="10"><?= lang("Web.datatable.no") ?></th>
                             <th><?= lang("Web.master.name") ?></th>
                             <th><?= lang("Web.master.desc") ?></th>
+                            <th><?= lang("Web.master.must_login") ?></th>
                             <th><?= lang("Web.datatable.updatedAt") ?></th>
                             <th width="100"><?= lang("Web.datatable.action") ?></th>
                         </tr>
@@ -30,6 +31,7 @@
                             <th class="text-center" width="10"><?= lang("Web.datatable.no") ?></th>
                             <th><?= lang("Web.master.name") ?></th>
                             <th><?= lang("Web.master.desc") ?></th>
+                            <th><?= lang("Web.master.must_login") ?></th>
                             <th><?= lang("Web.datatable.updatedAt") ?></th>
                             <th width="100"><?= lang("Web.datatable.action") ?></th>
                         </tr>
@@ -179,10 +181,10 @@
                 vue.list = json.data;
             },
             'columnDefs': [{
-                "targets": [4],
+                "targets": [5],
                 "orderable": false
             }, {
-                "targets": [0],
+                "targets": [0,3],
                 "className": 'text-center'
             }],
             "columns": [{
@@ -195,6 +197,12 @@
                     "data": "deskripsi",
                     "render": function(dt, type, row, meta) {
                         return row.deskripsi === null ? '-' : row.deskripsi
+                    }
+                },
+                {
+                    "data": "must_login",
+                    "render": function(dt, type, row, meta) {
+                        return row.must_login == 1 ? herlangjs('Web.confirmText'): herlangjs('Web.cancelText')
                     }
                 },
                 {

@@ -19,10 +19,12 @@ class Herauth extends BaseConfig
     public $redirectMain = '';
     public $herauthLangJsUrl = '';
     public $mainLangJsUrl = '';
+    public $unauthorizedPageView = 'errors/unauthorized';
 
     public function __construct()
     {
         parent::__construct();
+        require __DIR__."/../Helpers/herauth_main_helper.php";
         $this->herauthLangJsUrl = herauth_asset_url('lang');
     }
 }

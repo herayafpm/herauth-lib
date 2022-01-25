@@ -20,10 +20,12 @@ return [
         'group' => 'Group',
         'permission' => 'Permission',
         'client' => 'Client',
+        'path' => 'Path',
         'whitelist' => 'Whitelist',
         'admin' => 'Admin',
         'expired' => 'Expired',
         'hit_limit' => 'Hit Limit',
+        'must_login' => 'Harus Login',
     ],
     'requestLog' => 'Request Log',
     'datatable' => [

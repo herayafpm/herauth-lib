@@ -11,6 +11,7 @@ class Group extends BaseController
 
     public function index()
     {
+        herauth_grant("group.view_index","page");
         $data = [
             'page_title' => lang("Web.master.group"),
             'url_datatable' => herauth_web_url($this->root_view . "group/datatable"),
@@ -24,17 +25,9 @@ class Group extends BaseController
         return $this->view("group/index", $data);
     }
 
-    public function list()
-    {
-        return view($this->root_view . "group/table", [
-            '_json' => $this->getDataRequest(),
-            'url_delete' => herauth_web_url($this->root_view . "group/delete/"),
-            'url_restore' => herauth_web_url($this->root_view . "group/restore/")
-        ]);
-    }
-
     public function add()
     {
+        herauth_grant("group.view_add");
         $data = [
             'page_title' => lang("Web.add")." ".lang("Web.master.group"),
             'url_add' => herauth_web_url($this->root_view . "group/add"),
@@ -43,6 +36,7 @@ class Group extends BaseController
     }
     public function edit($id = null)
     {
+        herauth_grant("group.view_edit","page");
         $group = $this->model->withDeleted(true)->find($id);
         if (!$group) {
             throw new PageNotFoundException();
@@ -59,6 +53,7 @@ class Group extends BaseController
 
     public function users($id = null)
     {
+        herauth_grant("group.view_users","page");
         $group = $this->model->withDeleted(true)->find($id);
         if (!$group) {
             throw new PageNotFoundException();
@@ -76,6 +71,7 @@ class Group extends BaseController
 
     public function permissions($id = null)
     {
+        herauth_grant("group.view_permissions","page");
         $group = $this->model->withDeleted(true)->find($id);
         if (!$group) {
             throw new PageNotFoundException();

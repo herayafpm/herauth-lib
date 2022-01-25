@@ -23,6 +23,11 @@ class Permission extends Migration
 				'type'           => 'TEXT',
 				'null'			=> true
 			],
+			'must_login'       => [
+				'type'           => 'VARCHAR',
+				'constraint' => 1,
+				'default' => 1
+			],
 			'created_at'       => ['type' => 'datetime', 'null' => true],
 			'updated_at'       => ['type' => 'datetime', 'null' => true],
 			'deleted_at'       => ['type' => 'datetime', 'null' => true],

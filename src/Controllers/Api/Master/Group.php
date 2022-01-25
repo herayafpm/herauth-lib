@@ -13,12 +13,26 @@ class Group extends BaseResourceApi
 
     public function index()
     {
+        herauth_grant("group.post_groups");
         $data = $this->getDataRequest();
-        $groups = $this->model->select("id,nama,deskripsi")->findAll();
+        $limit = -1;
+        $offset = 0;
+        if (isset($data['limit'])) {
+            $limit = (int) $data['limit'];
+        }
+        if (isset($data['offset'])) {
+            $offset = (int) $data['offset'];
+        }
+        if ($limit > 0) {
+            $groups = $this->model->select("id,nama,deskripsi")->findAll($limit, $offset);
+        } else {
+            $groups = $this->model->select("id,nama,deskripsi")->findAll();
+        }
         return $this->respond(["status" => true, "message" => lang("Api.successRetrieveRequest", [lang("Web.master.group")]), "data" => $groups], 200);
     }
     public function datatable()
     {
+        herauth_grant("group.post_datatable");
         $data = $this->getDataRequest();
         $like = [
             'nama' => $data['search']['value'] ?? ''
@@ -29,6 +43,7 @@ class Group extends BaseResourceApi
 
     public function add()
     {
+        herauth_grant("group.post_add");
         $data = $this->getDataRequest();
         $rules = [
             'nama' => [
@@ -43,7 +58,7 @@ class Group extends BaseResourceApi
         }
         $insertData = [
             'nama' => $data['nama'],
-            'deskripsi' => $data['deskripsi'],
+            'deskripsi' => $data['deskripsi'] ?? '',
         ];
 
         if ($this->model->save($insertData)) {
@@ -54,6 +69,7 @@ class Group extends BaseResourceApi
     }
     public function edit($id = null)
     {
+        herauth_grant("group.post_edit");
         $group = $this->model->withDeleted(true)->find($id);
         if (!$group) {
             return $this->response->setStatusCode(404)->setJSON(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.group")]), "data" => []]);
@@ -72,7 +88,7 @@ class Group extends BaseResourceApi
         }
         $update_data = [
             'nama' => $data['nama'],
-            'deskripsi' => $data['deskripsi'],
+            'deskripsi' => $data['deskripsi'] ?? '',
         ];
 
         if ($this->model->update($id, $update_data)) {
@@ -85,8 +101,10 @@ class Group extends BaseResourceApi
     {
         $data = $this->getDataRequest();
         if (isset($data['purge'])) {
+            herauth_grant("group.post_purge");
             $group = $this->model->where(['nama !=' => 'superadmin'])->withDeleted(true)->find($id);
         } else {
+            herauth_grant("group.post_delete");
             $group = $this->model->where(['nama !=' => 'superadmin'])->find($id);
         }
         if ($group) {
@@ -115,6 +133,7 @@ class Group extends BaseResourceApi
     }
     public function restore($id = null)
     {
+        herauth_grant("group.post_restore");
         $group = $this->model->withDeleted(true)->find($id);
         if ($group) {
             if ($this->model->restore($id)) {
@@ -127,16 +146,43 @@ class Group extends BaseResourceApi
     }
     public function users($id = null)
     {
+        herauth_grant("group.post_users");
         $group = $this->model->withDeleted(true)->find($id);
         if ($group) {
             $user_group_model = model(UserGroupModel::class);
-            return $this->respond(["status" => true, "message" => lang("Api.successRetrieveRequest", [lang("Web.master.user") . " " . lang("Web.master.group")]), "data" => $user_group_model->where(['group_id' => $id])->findAll()], 200);
+            $data = $this->getDataRequest();
+            $limit = -1;
+            $offset = 0;
+            if (isset($data['limit'])) {
+                $limit = (int) $data['limit'];
+            }
+            if (isset($data['offset'])) {
+                $offset = (int) $data['offset'];
+            }
+            if ($limit > 0) {
+                $user_groups = $user_group_model->where(['group_id' => $id])->findAll($limit, $offset);
+            } else {
+                $user_groups = $user_group_model->where(['group_id' => $id])->findAll();
+            }
+            return $this->respond(["status" => true, "message" => lang("Api.successRetrieveRequest", [lang("Web.master.user") . " " . lang("Web.master.group")]), "data" => $user_groups], 200);
         }
         return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.user") . " " . lang("Web.master.group")]), "data" => []], 404);
     }
 
     public function delete_user_group($id = null)
     {
+        herauth_grant("group.post_delete_user_group");
+        $rules = [
+            'username' => [
+                'label'  => lang("Auth.labelUsername"),
+                'rules'  => "required",
+                'errors' => []
+            ]
+        ];
+
+        if (!$this->validate($rules)) {
+            return $this->response->setStatusCode(400)->setJSON(["status" => false, "message" => lang("Validation.errorValidation"), "data" => $this->validator->getErrors()]);
+        }
         $data = $this->getDataRequest();
         $group = $this->model->withDeleted(true)->find($id);
         if ($group) {
@@ -155,6 +201,7 @@ class Group extends BaseResourceApi
     }
     public function add_user_group($id = null)
     {
+        herauth_grant("group.post_add_user_group");
         $data = $this->getDataRequest();
         $group = $this->model->withDeleted(true)->find($id);
         if ($group) {
@@ -187,18 +234,41 @@ class Group extends BaseResourceApi
 
     public function permissions($id = null)
     {
+        herauth_grant("group.post_permissions");
         $group = $this->model->withDeleted(true)->find($id);
         if ($group) {
-            return $this->respond(["status" => true, "message" => lang("Api.successRetrieveRequest", [lang("Web.master.group")]), "data" => $group[0]->permissions], 200);
+            $data = $this->getDataRequest();
+            $limit = -1;
+            $offset = 0;
+            if (isset($data['limit'])) {
+                $limit = (int) $data['limit'];
+            }
+            if (isset($data['offset'])) {
+                $offset = (int) $data['offset'];
+            }
+            $group_permissions = $group->getPermissions($limit,$offset);
+            return $this->respond(["status" => true, "message" => lang("Api.successRetrieveRequest", [lang("Web.master.group")]), "data" => $group_permissions], 200);
         }
         return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.group")]), "data" => []], 404);
     }
 
     public function save_permissions($id = null)
     {
+        herauth_grant("group.post_save_permissions");
         $data = $this->getDataRequest();
         $group = $this->model->withDeleted(true)->find($id);
         if ($group) {
+            $rules = [
+                'permissions' => [
+                    'label'  => lang("Web.master.permission")."s",
+                    'rules'  => "required",
+                    'errors' => []
+                ]
+            ];
+    
+            if (!$this->validate($rules)) {
+                return $this->response->setStatusCode(400)->setJSON(["status" => false, "message" => lang("Validation.errorValidation"), "data" => $this->validator->getErrors()]);
+            }
             $group_permission_model = model(GroupPermissionModel::class);
             foreach ($data['permissions'] as $permission) {
                 $group_permission = $group_permission_model->where(['group_id' => $group->id, 'permission_id' => $permission['id']])->withDeleted(true)->first();
@@ -216,7 +286,7 @@ class Group extends BaseResourceApi
                     }
                 }
             }
-            return $this->respond(["status" => true, "message" => lang("Api.successSaveGroupRequest",[lang("Web.master.permission")]), "data" => []], 200);
+            return $this->respond(["status" => true, "message" => lang("Api.successSaveGroupRequest", [lang("Web.master.permission")]), "data" => []], 200);
         }
         return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.group")]), "data" => []], 404);
     }

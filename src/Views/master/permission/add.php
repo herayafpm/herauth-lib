@@ -24,6 +24,16 @@
                         {{errorsApi.deskripsi}}
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="mustLoginCheck" :class="errorsApi.must_login !== undefined?'is-invalid':''" :checked="must_login" v-model="must_login">
+                        <label class="custom-control-label" for="mustLoginCheck"><?= lang("Web.master.must_login") ?>?</label>
+                        <br/>
+                        <div class="invalid-feedback">
+                            {{errorsApi.must_login}}
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-12 mb-5">
                 <button v-if="!loadingApi" type="submit" class="btn btn-primary btn-block"><?= lang("Web.save") ?></button>
@@ -45,6 +55,7 @@
     dataVue = {
         nama: "",
         deskripsi: ``,
+        must_login: true,
         loadingApi: false,
         messageApi: '',
         dataApi: {},
@@ -65,6 +76,7 @@
             var formData = new FormData()
             formData.append('nama', this.nama);
             formData.append('deskripsi', this.deskripsi);
+            formData.append('must_login', this.must_login ? 1: 0);
 
             await axios.post("<?= $url_add ?>", formData, {
                 validateStatus: () => true

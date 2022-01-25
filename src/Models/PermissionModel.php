@@ -13,7 +13,7 @@ class PermissionModel extends BaseModel
     protected $returnType           = PermissionEntity::class;
     protected $useSoftDeletes       = true;
     protected $protectFields        = true;
-    protected $allowedFields        = ['nama', 'deskripsi','deleted_at'];
+    protected $allowedFields        = ['nama', 'deskripsi','must_login','deleted_at'];
 
     // Dates
     protected $useTimestamps        = true;

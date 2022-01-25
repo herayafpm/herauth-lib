@@ -15,6 +15,17 @@ class PermissionSeeder extends Seeder
         $permission_model = model(PermissionModel::class);
         $datas = [
             [
+                "nama" => "auth.login",
+                "deskripsi" => "Can Login",
+                "must_login" => 0,
+                "groups" => [
+                    "superadmin",
+                ],
+                "clients" => [
+                    1
+                ],
+            ],
+            [
                 "nama" => "profil.can_get",
                 "deskripsi" => "Get Data Profil (nama & username)",
                 "groups" => [
@@ -22,9 +33,14 @@ class PermissionSeeder extends Seeder
                 ],
                 "clients" => [
                     1
-                ]
-            ]
+                ],
+            ],
         ];
+        $datas = array_merge($datas,require __DIR__."/permissions/group.php");
+        $datas = array_merge($datas,require __DIR__."/permissions/admin.php");
+        $datas = array_merge($datas,require __DIR__."/permissions/client.php");
+        $datas = array_merge($datas,require __DIR__."/permissions/permission.php");
+        $datas = array_merge($datas,require __DIR__."/permissions/request_log.php");
         $group_model = model(GroupModel::class);
         $group_permission_model = model(GroupPermissionModel::class);
         $client_permission_model = model(ClientPermissionModel::class);

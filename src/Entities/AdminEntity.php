@@ -26,10 +26,14 @@ class AdminEntity extends AccountEntity
 		return $this;
 	}
 
-	public function getGroups()
+	public function getGroups($limit = -1, $offset = 0)
 	{
 		$user_group_model = model(UserGroupModel::class);
-		return $user_group_model->select('id,group_id')->where(['username' => $this->attributes['username']])->findAll();
+		if($limit > 0){
+			return $user_group_model->select('id,group_id')->where(['username' => $this->attributes['username']])->findAll($limit,$offset);
+		}else{
+			return $user_group_model->select('id,group_id')->where(['username' => $this->attributes['username']])->findAll();
+		}
 	}
 
 }

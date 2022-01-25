@@ -15,11 +15,11 @@ class ClaJWT
         $expireDateTime = new DateTimeImmutable($expireAt ?? "now");
         $expire     = ($expireAt) ? $expireDateTime : $issuedAt->modify("{$config->sym}{$config->duration} {$config->unit}");
         $token_data = [];
+        $token_data = [
+            'iat' => $issuedAt->getTimestamp(),
+            'nbf' => $issuedAt->getTimestamp(),
+        ];
         if ($withExpiredToken) {
-            $token_data = [
-                'iat' => $issuedAt->getTimestamp(),
-                'nbf' => $issuedAt->getTimestamp(),
-            ];
             $token_data['exp'] = $expire->getTimestamp();
         }
         $token_data = array_merge($data, $token_data);

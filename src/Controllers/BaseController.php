@@ -69,6 +69,7 @@ class BaseController extends Controller
         if($this->session->has('username')){
             $admin_model = model(AdminModel::class);
             $user = $admin_model->cekUser($this->session->get('username'));
+            $request->_user = $user;
             $this->_user = $user;
             $this->data['_user'] = $user;
         }

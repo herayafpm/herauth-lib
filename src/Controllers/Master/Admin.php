@@ -11,6 +11,7 @@ class Admin extends BaseController
 
     public function index()
     {
+        herauth_grant('admin.view_index','page');
         $data = [
             'page_title' => lang("Web.master.admin"),
             'url_datatable' => herauth_web_url($this->root_view . "admin/datatable"),
@@ -23,17 +24,9 @@ class Admin extends BaseController
         return $this->view("admin/index", $data);
     }
 
-    public function list()
-    {
-        return view($this->root_view . "admin/table", [
-            '_json' => $this->getDataRequest(),
-            'url_delete' => herauth_web_url($this->root_view . "admin/delete/"),
-            'url_restore' => herauth_web_url($this->root_view . "admin/restore/")
-        ]);
-    }
-
     public function add()
     {
+        herauth_grant('admin.view_add','page');
         $data = [
             'page_title' => lang("Web.add")." ".lang("Web.master.admin"),
             'url_add' => herauth_web_url($this->root_view . "admin/add"),
@@ -42,6 +35,7 @@ class Admin extends BaseController
     }
     public function edit($id = null)
     {
+        herauth_grant('admin.view_edit','page');
         $admin = $this->model->withDeleted(true)->find($id);
         if (!$admin) {
             throw new PageNotFoundException();
@@ -56,6 +50,7 @@ class Admin extends BaseController
     }
     public function group($id = null)
     {
+        herauth_grant('admin.view_group','page');
         $admin = $this->model->withDeleted(true)->find($id);
         if (!$admin) {
             throw new PageNotFoundException();

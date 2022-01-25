@@ -42,7 +42,7 @@ class GroupPermissionModel extends BaseModel
     public function doesUserHavePermission(string $username, int $permissionId): bool
     {
         // Check group permissions
-        $count = $this->join("herauth_user_group", "{$this->table}.group_id = herauth_user_group.group_id", "LEFT")->where(['username' => $username, 'permission_id' => $permissionId])->countAllResults();
+        $count = $this->join("herauth_user_group", "{$this->table}.group_id = herauth_user_group.group_id", "LEFT")->join("herauth_group", "{$this->table}.group_id = herauth_group.id", "LEFT")->join("herauth_permission", "{$this->table}.permission_id = herauth_permission.id", "LEFT")->where(['username' => $username, "{$this->table}.permission_id" => $permissionId,"{$this->table}.{$this->deletedField}" => null,"herauth_user_group.deleted_at" => null,"herauth_group.deleted_at" => null,"herauth_permission.deleted_at" => null])->countAllResults();
 
         return $count > 0;
     }

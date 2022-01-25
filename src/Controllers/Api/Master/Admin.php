@@ -12,6 +12,7 @@ class Admin extends BaseResourceApi
 
     public function datatable()
     {
+        herauth_grant("admin.post_datatable");
         $data = $this->getDataRequest();
         $like = [
             'nama' => $data['search']['value'] ?? ''
@@ -22,6 +23,7 @@ class Admin extends BaseResourceApi
 
     public function add()
     {
+        herauth_grant("admin.post_add");
         $data = $this->getDataRequest();
         $rules = [
             'username' => [
@@ -58,6 +60,7 @@ class Admin extends BaseResourceApi
     }
     public function edit($id = null)
     {
+        herauth_grant("admin.post_edit");
         $admin = $this->model->withDeleted(true)->find($id);
         if (!$admin) {
             return $this->response->setStatusCode(404)->setJSON(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.admin")]), "data" => []]);
@@ -104,8 +107,10 @@ class Admin extends BaseResourceApi
     {
         $data = $this->getDataRequest();
         if (isset($data['purge'])) {
+            herauth_grant("admin.post_purge");
             $admin = $this->model->where(['username !=' => 'superadmin'])->withDeleted(true)->find($id);
         } else {
+            herauth_grant("admin.post_delete");
             $admin = $this->model->where(['username !=' => 'superadmin'])->find($id);
         }
         if ($admin) {
@@ -134,6 +139,7 @@ class Admin extends BaseResourceApi
     }
     public function restore($id = null)
     {
+        herauth_grant("admin.post_restore");
         $admin = $this->model->withDeleted(true)->find($id);
         if ($admin) {
             if ($this->model->restore($id)) {
@@ -146,18 +152,40 @@ class Admin extends BaseResourceApi
     }
     public function groups($id = null)
     {
+        herauth_grant("admin.post_groups");
         $admin = $this->model->withDeleted(true)->find($id);
         if ($admin) {
-            return $this->respond(["status" => true, "message" => lang("Api.successRetrieveRequest", [lang("Web.master.admin")]), "data" => $admin[0]->groups], 200);
+            $data = $this->getDataRequest();
+            $limit = -1;
+            $offset = 0;
+            if (isset($data['limit'])) {
+                $limit = (int) $data['limit'];
+            }
+            if (isset($data['offset'])) {
+                $offset = (int) $data['offset'];
+            }
+            return $this->respond(["status" => true, "message" => lang("Api.successRetrieveRequest", [lang("Web.master.admin")]), "data" => $admin->getGroups($limit,$offset)], 200);
         }
         return $this->respond(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.admin")]), "data" => []], 404);
     }
 
     public function save_group($id = null)
     {
+        herauth_grant("admin.post_save_group");
         $data = $this->getDataRequest();
         $admin = $this->model->withDeleted(true)->find($id);
         if ($admin) {
+            $rules = [
+                'groups' => [
+                    'label'  => lang("Web.master.group")."s",
+                    'rules'  => "required",
+                    'errors' => []
+                ]
+            ];
+    
+            if (!$this->validate($rules)) {
+                return $this->response->setStatusCode(400)->setJSON(["status" => false, "message" => lang("Validation.errorValidation"), "data" => $this->validator->getErrors()]);
+            }
             $user_group_model = model(UserGroupModel::class);
             foreach ($data['groups'] as $group) {
                 $user_group = $user_group_model->where(['username' => $admin->username, 'group_id' => $group['id']])->withDeleted(true)->first();

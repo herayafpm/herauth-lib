@@ -19,10 +19,14 @@ class GroupEntity extends Entity
     ];
     protected $casts   = [];
 
-    public function getPermissions()
+    public function getPermissions($limit = -1, $offset = 0)
     {
         $group_permission_model = model(GroupPermissionModel::class);
-        return $group_permission_model->where(['group_id' => $this->attributes['id']])->findAll();
+        if($limit > 0){
+            return $group_permission_model->where(['group_id' => $this->attributes['id']])->findAll($limit,$offset);
+        }else{
+            return $group_permission_model->where(['group_id' => $this->attributes['id']])->findAll();
+        }
     }
 
 }

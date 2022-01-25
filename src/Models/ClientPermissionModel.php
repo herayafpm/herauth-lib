@@ -42,7 +42,7 @@ class ClientPermissionModel extends BaseModel
     public function doesClientHavePermission(string $client_id, int $permissionId): bool
     {
         // Check group permissions
-        $count = $this->where(['client_id' => $client_id, 'permission_id' => $permissionId])->countAllResults();
+        $count = $this->join("herauth_permission", "{$this->table}.permission_id = herauth_permission.id", "LEFT")->where(['client_id' => $client_id, 'permission_id' => $permissionId,"{$this->table}.{$this->deletedField}" => null,"herauth_permission.deleted_at" => null])->countAllResults();
 
         return $count > 0;
     }

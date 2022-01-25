@@ -37,6 +37,7 @@ class ApiFilter implements FilterInterface
                     throw new DomainException(lang("Filters.apiKey.notFound"));
                 }
                 $client->cekWhitelist();
+                $request->client_data = $client;
             }
         } catch (\DomainException $th) {
             if(!empty($th->getMessage())){

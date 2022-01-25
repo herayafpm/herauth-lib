@@ -11,30 +11,50 @@ class Permission extends BaseResourceApi
 
     public function index()
     {
+        herauth_grant("permission.post_permissions");
         $data = $this->getDataRequest();
-        $groups = $this->model->select("id,nama,deskripsi")->findAll();
-        return $this->respond(["status" => true, "message" => lang("Api.successRetrieveRequest", [lang("Web.master.permission")]), "data" => $groups], 200);
+        $limit = -1;
+        $offset = 0;
+        if (isset($data['limit'])) {
+            $limit = (int) $data['limit'];
+        }
+        if (isset($data['offset'])) {
+            $offset = (int) $data['offset'];
+        }
+        if ($limit > 0) {
+            $permissions = $this->model->select("id,nama,deskripsi")->findAll($limit, $offset);
+        } else {
+            $permissions = $this->model->select("id,nama,deskripsi")->findAll();
+        }
+        return $this->respond(["status" => true, "message" => lang("Api.successRetrieveRequest", [lang("Web.master.permission")]), "data" => $permissions], 200);
     }
 
     public function datatable()
     {
+        herauth_grant("permission.post_datatable");
         $data = $this->getDataRequest();
         $like = [
             'nama' => $data['search']['value'] ?? ''
         ];
         $this->request->message_after = lang("Api.successRetrieveRequest", [lang("Web.master.permission")]);
-        return $this->respond($this->datatable_get(['withDeleted' => true,'like' => $like]), 200);
+        return $this->respond($this->datatable_get(['withDeleted' => true, 'like' => $like]), 200);
     }
 
     public function add()
     {
+        herauth_grant("permission.post_add");
         $data = $this->getDataRequest();
         $rules = [
             'nama' => [
                 'label'  => lang("Api.validation.master.nama", [lang("Web.master.permission")]),
                 'rules'  => "required|is_unique[herauth_permission.nama]",
                 'errors' => []
-            ]
+            ],
+            'must_login' => [
+                'label'  => lang("Web.master.must_login", [lang("Web.master.permission")]),
+                'rules'  => "required",
+                'errors' => []
+            ],
         ];
 
         if (!$this->validate($rules)) {
@@ -42,7 +62,8 @@ class Permission extends BaseResourceApi
         }
         $insertData = [
             'nama' => $data['nama'],
-            'deskripsi' => $data['deskripsi'],
+            'deskripsi' => $data['deskripsi'] ?? '',
+            'must_login' => (bool)$data['must_login'] ? 1 : 0,
         ];
 
         if ($this->model->save($insertData)) {
@@ -53,6 +74,7 @@ class Permission extends BaseResourceApi
     }
     public function edit($id = null)
     {
+        herauth_grant("permission.post_edit");
         $permission = $this->model->withDeleted(true)->find($id);
         if (!$permission) {
             return $this->response->setStatusCode(404)->setJSON(["status" => false, "message" => lang("Api.ApiRequestNotFound", [lang("Web.master.permission")]), "data" => []]);
@@ -63,7 +85,12 @@ class Permission extends BaseResourceApi
                 'label'  => lang("Api.validation.master.nama", [lang("Web.master.permission")]),
                 'rules'  => "required|is_unique[herauth_permission.nama,id,{$id}]",
                 'errors' => []
-            ]
+            ],
+            'must_login' => [
+                'label'  => lang("Web.master.must_login", [lang("Web.master.permission")]),
+                'rules'  => "required",
+                'errors' => []
+            ],
         ];
 
         if (!$this->validate($rules)) {
@@ -71,7 +98,8 @@ class Permission extends BaseResourceApi
         }
         $update_data = [
             'nama' => $data['nama'],
-            'deskripsi' => $data['deskripsi'],
+            'deskripsi' => $data['deskripsi'] ?? '',
+            'must_login' => (bool)$data['must_login'] ? 1 : 0,
         ];
 
         if ($this->model->update($id, $update_data)) {
@@ -84,8 +112,10 @@ class Permission extends BaseResourceApi
     {
         $data = $this->getDataRequest();
         if (isset($data['purge'])) {
+            herauth_grant("permission.post_purge");
             $permission = $this->model->withDeleted(true)->find($id);
         } else {
+            herauth_grant("permission.post_delete");
             $permission = $this->model->find($id);
         }
         if ($permission) {
@@ -114,6 +144,7 @@ class Permission extends BaseResourceApi
     }
     public function restore($id = null)
     {
+        herauth_grant("permission.post_restore");
         $permission = $this->model->withDeleted(true)->find($id);
         if ($permission) {
             if ($this->model->restore($id)) {
