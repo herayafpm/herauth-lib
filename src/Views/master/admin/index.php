@@ -195,7 +195,7 @@
                     "data": "nama",
                 },
                 {
-                    "data": "updated_at.date",
+                    "data": "updated_at",
                     "render": function(dt, type, row, meta) {
                         return toLocaleDate(row.updated_at.date, 'LLL');
                     }

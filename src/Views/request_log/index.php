@@ -157,7 +157,7 @@
                     "data": "status_message",
                 },
                 {
-                    "data": "created_at.date",
+                    "data": "created_at",
                     "render": function(dt, type, row, meta) {
                         return toLocaleDate(row.created_at.date, 'LLL');
                     }
