@@ -9,8 +9,8 @@
                 <div v-if="alertType !== ''" class="alert" :class="'alert-'+alertType">
                     {{messageApi}}
                 </div>
-                <div class="form-group">
-                    <div class="custom-control custom-checkbox custom-control-inline" v-for="(group,index) in groups">
+                <div class="form-group row m-2">
+                    <div class="custom-control custom-checkbox custom-control-inline col-md-3" v-for="(group,index) in groups">
                         <input type="checkbox" class="custom-control-input" :id="'groupCheck'+index" :checked="group.checked" v-model="group.checked">
                         <label class="custom-control-label" :for="'groupCheck'+index">{{group.nama}}</label>
                     </div>

@@ -9,8 +9,8 @@
                 <div v-if="alertType !== ''" class="alert" :class="'alert-'+alertType">
                     {{messageApi}}
                 </div>
-                <div class="form-group">
-                    <div class="custom-control custom-checkbox custom-control-inline" v-for="(permission,index) in permissions">
+                <div class="form-group row m-2">
+                    <div class="custom-control custom-checkbox custom-control-inline col-md-3" v-for="(permission,index) in permissions">
                         <input type="checkbox" class="custom-control-input" :id="'permissionsCheck'+index" :checked="permission.checked" v-model="permission.checked">
                         <label class="custom-control-label" :for="'permissionsCheck'+index">{{permission.nama}}</label>
                     </div>
