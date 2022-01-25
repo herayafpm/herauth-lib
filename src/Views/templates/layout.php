@@ -154,6 +154,14 @@
                                 ?>
                             </ul>
                         </li>
+                        <li class="nav-item">
+                            <a href="<?= herauth_base_locale_url('request_log') ?>" class="nav-link <?= in_array($url, ['/request_log']) ? 'active' : '' ?>">
+                                <i class="nav-icon fas fa-folder-open"></i>
+                                <p>
+                                    <?= lang("Web.requestLog") ?>
+                                </p>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

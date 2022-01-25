@@ -25,14 +25,18 @@ return [
         'expired' => 'Expired',
         'hit_limit' => 'Hit Limit',
     ],
+    'requestLog' => 'Request Log',
     'datatable' => [
         'no' => "No.",
         'updatedAt' => "Updated At",
+        'createdAt' => "Created At",
         'action' => 'Aksi'
     ],
+    'statusCode' => 'Status',
+    'statusMessage' => 'Message',
     'client' => [
         'ipAddress' => 'IP Address',
         'android' => 'Android',
         'ios' => 'IOS'
-    ]
+    ],
 ];

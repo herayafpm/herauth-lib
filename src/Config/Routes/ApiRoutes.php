@@ -45,3 +45,7 @@ $routes->group('master', ['namespace' => $routes->namespace . "\Master", 'filter
         $routes->post('delete/(:segment)', 'Admin::delete/$1');
     });
 });
+
+$routes->group('request_log',['namespace' => $routes->namespace , 'filter' => 'auth_api_filter'], function ($routes) {
+    $routes->post('datatable', 'RequestLog::datatable');
+});

@@ -49,6 +49,7 @@ $routes->group('herauth',function($routes){
                     $routes->get('edit/(:segment)','Admin::edit/$1');
                 });
             });
+            $routes->get('request_log','RequestLog::index');
             $routes->get('','Home::index');
             // $routes->get('(:any)','Home::index/$1');
         });
