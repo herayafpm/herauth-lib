@@ -5,19 +5,21 @@ namespace Raydragneel\HerauthLib\Config;
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
 
-$routes->setPrioritize();
 $routes->group('herauth',function($routes){
     $routes->setDefaultNamespace('Raydragneel\HerauthLib\Controllers\Api');
+    $routes->setPrioritize(true);
     $routes->group('web/{locale}', function ($routes) {
         require __DIR__.'./Routes/ApiRoutes.php';
     });
     $routes->group('api/{locale}', function ($routes) {
         require __DIR__.'./Routes/ApiRoutes.php';
     });
+    $routes->setPrioritize(false);
+    $routes->setPrioritize(true);
     $routes->setDefaultNamespace('Raydragneel\HerauthLib\Controllers');
     $routes->group('', function ($routes) {
         $routes->get('assets/(:any)','Assets::file/$1');
-        $routes->get('', 'Home::redirLocale');
+        $routes->get('', 'Home::redirLocale',['priority' => 1]);
         $routes->group('{locale}', ['filter' => 'auth_filter'], function ($routes) {
             $routes->get('logout','Auth::logout');
             $routes->get('login','Auth::login');
@@ -55,5 +57,6 @@ $routes->group('herauth',function($routes){
             // $routes->get('(:any)','Home::index/$1');
         });
     });
+    $routes->setPrioritize(false);
+    
 });
-$routes->setPrioritize(false);
