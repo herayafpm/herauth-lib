@@ -22,7 +22,7 @@ class AuthFilter implements FilterInterface
             if($segments[0] === 'herauth'){
                 if(sizeof($segments) > 2){
                     if($segments[2] === 'login'){
-                        return redirect()->to(herauth_base_url($request->getLocale()));
+                        return redirect()->to(herauth_base_locale_url());
                     }
                 }
             }else{
@@ -34,10 +34,10 @@ class AuthFilter implements FilterInterface
             if($segments[0] === 'herauth'){
                 if(sizeof($segments) > 2){
                     if($segments[2] !== 'login'){
-                        return redirect()->to(herauth_base_url($request->getLocale()."/login"));
+                        return redirect()->to(herauth_base_locale_url("/login"));
                     }
                 }else{
-                    return redirect()->to(herauth_base_url($request->getLocale()."/login"));
+                    return redirect()->to(herauth_base_locale_url("/login"));
                 }
             }else{
                 if($request->uri->getPath() !== $config->redirectLogin){

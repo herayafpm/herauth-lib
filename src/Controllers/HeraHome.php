@@ -12,7 +12,7 @@ class HeraHome extends BaseController
 
     public function redirLocale()
     {
-        return redirect()->to(base_locale_url());
+        return redirect()->to(herauth_base_locale_url());
     }
 
     
