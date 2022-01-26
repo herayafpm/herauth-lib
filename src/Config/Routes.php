@@ -15,6 +15,7 @@ $routes->group('herauth',function($routes){
         require __DIR__.'./Routes/ApiRoutes.php';
     });
     $routes->setPrioritize(false);
+    $routes->setPrioritize(true);
     $routes->setDefaultNamespace('Raydragneel\HerauthLib\Controllers');
     $routes->group('', function ($routes) {
         $routes->get('assets/(:any)','Assets::file/$1');
@@ -56,5 +57,6 @@ $routes->group('herauth',function($routes){
             // $routes->get('(:any)','Home::index/$1');
         });
     });
+    $routes->setPrioritize(false);
     
 });
