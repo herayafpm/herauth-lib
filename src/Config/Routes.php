@@ -17,8 +17,10 @@ $routes->group('herauth',function($routes){
     $routes->setPrioritize(false);
     $routes->namespace = 'Raydragneel\HerauthLib\Controllers';
     $routes->group('', ['namespace' => $routes->namespace], function ($routes) {
-        $routes->get('assets/(:any)','Assets::file/$1');
+        $routes->setPrioritize(true);
         $routes->get('/', 'Home::redirLocale');
+        $routes->setPrioritize(false);
+        $routes->get('assets/(:any)','Assets::file/$1');
         $routes->group('{locale}', ['namespace' => $routes->namespace,'filter' => 'auth_filter'], function ($routes) {
             $routes->get('logout','Auth::logout');
             $routes->get('login','Auth::login');
