@@ -27,11 +27,12 @@ class Services extends BaseService
         if ($getShared) {
             return static::getSharedInstance('renderer', $viewPath, $config);
         }
+        $paths = config('Paths');
         $request = service('request');
-        if ($request->uri->getSegments()[0] === 'herauth') {
-            $paths = new HerauthPaths();
-        }else{
-            $paths = config('Paths');
+        if(sizeof($request->uri->getSegments()) > 0){
+            if ($request->uri->getSegments()[0] === 'herauth') {
+                $paths = new HerauthPaths();
+            }
         }
         $viewPath = $paths->viewDirectory;
         $config   = $config ?? config('View');
