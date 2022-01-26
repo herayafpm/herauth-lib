@@ -10,5 +10,10 @@ class Home extends BaseController
         return $this->view('dashboard', $data);
     }
 
+    public function redirLocale()
+    {
+        return redirect()->to(base_locale_url());
+    }
+
     
 }

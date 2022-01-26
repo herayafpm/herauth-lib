@@ -18,9 +18,7 @@ $routes->group('herauth',function($routes){
     $routes->namespace = 'Raydragneel\HerauthLib\Controllers';
     $routes->group('', ['namespace' => $routes->namespace], function ($routes) {
         $routes->get('assets/(:any)','Assets::file/$1');
-        $routes->get('/', function(){
-            return redirect()->to(herauth_base_locale_url());
-        });
+        $routes->get('/', 'Home::redirLocale');
         $routes->group('{locale}', ['namespace' => $routes->namespace,'filter' => 'auth_filter'], function ($routes) {
             $routes->get('logout','Auth::logout');
             $routes->get('login','Auth::login');
