@@ -7,7 +7,7 @@ use Raydragneel\HerauthLib\Models\ClientModel;
 use Raydragneel\HerauthLib\Models\ClientPermissionModel;
 use Raydragneel\HerauthLib\Models\ClientWhitelistModel;
 
-class Client extends BaseResourceApi
+class HeraClient extends BaseResourceApi
 {
     protected $modelName = ClientModel::class;
 

@@ -5,7 +5,7 @@ namespace Raydragneel\HerauthLib\Controllers\Master;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Raydragneel\HerauthLib\Models\PermissionModel;
 
-class Permission extends BaseController
+class HeraPermission extends BaseController
 {
     protected $modelName = PermissionModel::class;
 

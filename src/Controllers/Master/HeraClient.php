@@ -5,7 +5,7 @@ namespace Raydragneel\HerauthLib\Controllers\Master;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Raydragneel\HerauthLib\Models\ClientModel;
 
-class Client extends BaseController
+class HeraClient extends BaseController
 {
     protected $modelName = ClientModel::class;
 

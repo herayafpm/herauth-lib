@@ -7,7 +7,7 @@ use Raydragneel\HerauthLib\Models\GroupModel;
 use Raydragneel\HerauthLib\Models\GroupPermissionModel;
 use Raydragneel\HerauthLib\Models\UserGroupModel;
 
-class Group extends BaseResourceApi
+class HeraGroup extends BaseResourceApi
 {
     protected $modelName = GroupModel::class;
 

@@ -5,7 +5,7 @@ namespace Raydragneel\HerauthLib\Controllers\Master;
 use Raydragneel\HerauthLib\Models\GroupModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
-class Group extends BaseController
+class HeraGroup extends BaseController
 {
     protected $modelName = GroupModel::class;
 

@@ -2,7 +2,7 @@
 
 namespace Raydragneel\HerauthLib\Controllers;
 
-class Auth extends BaseController
+class HeraAuth extends BaseController
 {
     public function login()
     {

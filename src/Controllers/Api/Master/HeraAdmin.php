@@ -6,7 +6,7 @@ use Raydragneel\HerauthLib\Controllers\Api\BaseResourceApi;
 use Raydragneel\HerauthLib\Models\AdminModel;
 use Raydragneel\HerauthLib\Models\UserGroupModel;
 
-class Admin extends BaseResourceApi
+class HeraAdmin extends BaseResourceApi
 {
     protected $modelName = AdminModel::class;
 

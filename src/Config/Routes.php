@@ -17,45 +17,45 @@ $routes->group('herauth',function($routes){
     $routes->setPrioritize(false);
     $routes->setDefaultNamespace('Raydragneel\HerauthLib\Controllers');
     $routes->group('', function ($routes) {
-        $routes->get('assets/(:any)','Assets::file/$1');
+        $routes->get('assets/(:any)','HeraAssets::file/$1');
         $routes->setPrioritize();
-        $routes->get('', 'Home::redirLocale',['priority' => 1]);
+        $routes->get('', 'HeraHome::redirLocale',['priority' => 1]);
         $routes->setPrioritize(false);
         $routes->group('{locale}', ['filter' => 'auth_filter'], function ($routes) {
-            $routes->get('logout','Auth::logout');
-            $routes->get('login','Auth::login');
+            $routes->get('logout','HeraAuth::logout');
+            $routes->get('login','HerAuth::login');
             $routes->setDefaultNamespace('Raydragneel\HerauthLib\Controllers\Master');
             $routes->group('master', ['filter' => 'auth_filter'], function ($routes) {
                 $routes->group('group', function ($routes) {
-                    $routes->get('/','Group::index');
-                    $routes->get('users/(:segment)','Group::users/$1');
-                    $routes->get('permissions/(:segment)','Group::permissions/$1');
-                    $routes->get('add','Group::add');
-                    $routes->get('edit/(:segment)','Group::edit/$1');
+                    $routes->get('/','HeraGroup::index');
+                    $routes->get('users/(:segment)','HeraGroup::users/$1');
+                    $routes->get('permissions/(:segment)','HeraGroup::permissions/$1');
+                    $routes->get('add','HeraGroup::add');
+                    $routes->get('edit/(:segment)','HeraGroup::edit/$1');
                 });
                 $routes->group('permission', function ($routes) {
-                    $routes->get('/','Permission::index');
-                    $routes->get('add','Permission::add');
-                    $routes->get('edit/(:segment)','Permission::edit/$1');
+                    $routes->get('/','HeraPermission::index');
+                    $routes->get('add','HeraPermission::add');
+                    $routes->get('edit/(:segment)','HeraPermission::edit/$1');
                 });
                 $routes->group('client', function ($routes) {
-                    $routes->get('/','Client::index');
-                    $routes->get('add','Client::add');
-                    $routes->get('edit/(:segment)','Client::edit/$1');
-                    $routes->get('permissions/(:segment)','Client::permissions/$1');
-                    $routes->get('whitelists/(:segment)','Client::whitelists/$1');
+                    $routes->get('/','HeraClient::index');
+                    $routes->get('add','HeraClient::add');
+                    $routes->get('edit/(:segment)','HeraClient::edit/$1');
+                    $routes->get('permissions/(:segment)','HeraClient::permissions/$1');
+                    $routes->get('whitelists/(:segment)','HeraClient::whitelists/$1');
                 });
                 $routes->group('admin', function ($routes) {
-                    $routes->get('/','Admin::index');
-                    $routes->get('group/(:segment)','Admin::group/$1');
-                    $routes->get('add','Admin::add');
-                    $routes->get('edit/(:segment)','Admin::edit/$1');
+                    $routes->get('/','Hera::index');
+                    $routes->get('group/(:segment)','Hera::group/$1');
+                    $routes->get('add','Hera::add');
+                    $routes->get('edit/(:segment)','Hera::edit/$1');
                 });
             });
             $routes->setDefaultNamespace('Raydragneel\HerauthLib\Controllers');
-            $routes->get('request_log','RequestLog::index');
-            $routes->get('/','Home::index');
-            // $routes->get('(:any)','Home::index/$1');
+            $routes->get('request_log','HeraRequestLog::index');
+            $routes->get('/','HeraHome::index');
+            // $routes->get('(:any)','HeraHome::index/$1');
         });
     });
     

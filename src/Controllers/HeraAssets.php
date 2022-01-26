@@ -4,7 +4,7 @@ namespace Raydragneel\HerauthLib\Controllers;
 
 use CodeIgniter\Exceptions\PageNotFoundException;
 
-class Assets extends BaseController
+class HeraAssets extends BaseController
 {
     public function file($any = false)
     {

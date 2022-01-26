@@ -4,7 +4,7 @@ namespace Raydragneel\HerauthLib\Controllers\Api;
 
 use Raydragneel\HerauthLib\Models\RequestLogModel;
 
-class RequestLog extends BaseResourceApi
+class HeraRequestLog extends BaseResourceApi
 {
     protected $modelName = RequestLogModel::class;
 

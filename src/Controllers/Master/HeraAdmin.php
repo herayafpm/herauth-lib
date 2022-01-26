@@ -5,7 +5,7 @@ namespace Raydragneel\HerauthLib\Controllers\Master;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Raydragneel\HerauthLib\Models\AdminModel;
 
-class Admin extends BaseController
+class HeraAdmin extends BaseController
 {
     protected $modelName = AdminModel::class;
 

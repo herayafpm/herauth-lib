@@ -5,7 +5,7 @@ namespace Raydragneel\HerauthLib\Controllers\Api\Master;
 use Raydragneel\HerauthLib\Controllers\Api\BaseResourceApi;
 use Raydragneel\HerauthLib\Models\PermissionModel;
 
-class Permission extends BaseResourceApi
+class HeraPermission extends BaseResourceApi
 {
     protected $modelName = PermissionModel::class;
 

@@ -8,7 +8,7 @@ use Raydragneel\HerauthLib\Entities\AdminEntity;
 use Raydragneel\HerauthLib\Libraries\ClaJWT;
 use Raydragneel\HerauthLib\Models\AdminModel;
 
-class Auth extends BaseResourceApi
+class HeraAuth extends BaseResourceApi
 {
     protected $modelName = AdminModel::class;
     protected function rules_login($key = null)

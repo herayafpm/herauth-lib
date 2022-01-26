@@ -2,7 +2,7 @@
 
 namespace Raydragneel\HerauthLib\Controllers;
 
-class Home extends BaseController
+class HeraHome extends BaseController
 {
     public function index()
     {
