@@ -23,7 +23,7 @@ $routes->group('herauth',function($routes){
         $routes->setPrioritize(false);
         $routes->group('{locale}', ['filter' => 'auth_filter'], function ($routes) {
             $routes->get('logout','HeraAuth::logout');
-            $routes->get('login','HerAuth::login');
+            $routes->get('login','HeraAuth::login');
             $routes->setDefaultNamespace('Raydragneel\HerauthLib\Controllers\Master');
             $routes->group('master', ['filter' => 'auth_filter'], function ($routes) {
                 $routes->group('group', function ($routes) {
