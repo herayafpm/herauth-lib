@@ -19,7 +19,7 @@ $routes->group('herauth',function($routes){
     $routes->group('', function ($routes) {
         $routes->get('assets/(:any)','HeraAssets::file/$1');
         $routes->setPrioritize();
-        $routes->get('', 'HeraHome::redirLocale',['priority' => 1]);
+        $routes->get('', 'HeraHome::redirLocale',['priority' => 99]);
         $routes->setPrioritize(false);
         $routes->group('{locale}', ['filter' => 'auth_filter'], function ($routes) {
             $routes->get('logout','HeraAuth::logout');
