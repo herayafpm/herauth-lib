@@ -19,7 +19,7 @@ $routes->group('herauth',function($routes){
     $routes->setDefaultNamespace('Raydragneel\HerauthLib\Controllers');
     $routes->group('', function ($routes) {
         $routes->get('assets/(:any)','Assets::file/$1');
-        $routes->addRedirect('', 'herauth/id');
+        $routes->get('', 'Home::redirLocale');
         $routes->group('{locale}', ['filter' => 'auth_filter'], function ($routes) {
             $routes->get('logout','Auth::logout');
             $routes->get('login','Auth::login');
