@@ -119,4 +119,25 @@ class AccountEntity extends Entity
 	{
 		return $this->user_group_model->join("herauth_group group", "herauth_user_group.group_id = group.id")->where('username', $this->username)->findColumn('nama');
 	}
+
+	public function addGroup($name)
+	{
+		$group = $this->group_model->findGroupByName($name);
+		if($group){
+			return $this->user_group_model->save([
+				'username' => $this->username,
+				'group_id' => $group->id
+			]);
+		}
+		return false;
+	}
+	public function deleteGroup($name)
+	{
+		$user_group = $this->user_group_model->join("herauth_group group", "herauth_user_group.group_id = group.id")->where(['username' => $this->username,'nama' => $name])->first();
+		if($user_group){
+			return $this->user_group_model->delete($user_group->id);
+		}
+		return false;
+	}
+
 }
