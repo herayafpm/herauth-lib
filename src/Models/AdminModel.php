@@ -4,7 +4,7 @@ namespace Raydragneel\HerauthLib\Models;
 
 use Raydragneel\HerauthLib\Entities\AdminEntity;
 
-class AdminModel extends BaseModel implements UserClientInterface
+class AdminModel extends BaseModel implements UserInterface
 {
 	protected $table                = 'herauth_admin';
 	protected $primaryKey           = 'id';

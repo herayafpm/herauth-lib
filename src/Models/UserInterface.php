@@ -1,6 +1,6 @@
 <?php namespace Raydragneel\HerauthLib\Models;
 
-interface UserClientInterface{
+interface UserInterface{
 
     public function cekUser(string $username);
 }
