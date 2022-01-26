@@ -6,25 +6,24 @@ namespace Raydragneel\HerauthLib\Config;
 $routes = Services::routes();
 
 $routes->group('herauth',function($routes){
-    $routes->namespace = 'Raydragneel\HerauthLib\Controllers\Api';
+    $routes->setDefaultNamespace('Raydragneel\HerauthLib\Controllers\Api');
     $routes->setPrioritize(true);
-    $routes->group('web/{locale}', ['namespace' => $routes->namespace], function ($routes) {
+    $routes->group('web/{locale}', function ($routes) {
         require __DIR__.'./Routes/ApiRoutes.php';
     });
-    $routes->group('api/{locale}', ['namespace' => $routes->namespace], function ($routes) {
+    $routes->group('api/{locale}', function ($routes) {
         require __DIR__.'./Routes/ApiRoutes.php';
     });
     $routes->setPrioritize(false);
-    $routes->namespace = 'Raydragneel\HerauthLib\Controllers';
-    $routes->group('', ['namespace' => $routes->namespace], function ($routes) {
-        $routes->setPrioritize(true);
-        $routes->get('/', 'Home::redirLocale');
-        $routes->setPrioritize(false);
+    $routes->setDefaultNamespace('Raydragneel\HerauthLib\Controllers');
+    $routes->group('', function ($routes) {
         $routes->get('assets/(:any)','Assets::file/$1');
-        $routes->group('{locale}', ['namespace' => $routes->namespace,'filter' => 'auth_filter'], function ($routes) {
+        $routes->addRedirect('', 'herauth/id');
+        $routes->group('{locale}', ['filter' => 'auth_filter'], function ($routes) {
             $routes->get('logout','Auth::logout');
             $routes->get('login','Auth::login');
-            $routes->group('master', ['namespace' => $routes->namespace."\Master",'filter' => 'auth_filter'], function ($routes) {
+            $routes->setDefaultNamespace('Raydragneel\HerauthLib\Controllers\Master');
+            $routes->group('master', ['filter' => 'auth_filter'], function ($routes) {
                 $routes->group('group', function ($routes) {
                     $routes->get('/','Group::index');
                     $routes->get('users/(:segment)','Group::users/$1');
@@ -51,6 +50,7 @@ $routes->group('herauth',function($routes){
                     $routes->get('edit/(:segment)','Admin::edit/$1');
                 });
             });
+            $routes->setDefaultNamespace('Raydragneel\HerauthLib\Controllers');
             $routes->get('request_log','RequestLog::index');
             $routes->get('/','Home::index');
             // $routes->get('(:any)','Home::index/$1');
