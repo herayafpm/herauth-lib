@@ -40,6 +40,35 @@ if (!function_exists('herauth_api_url')) {
         return herauth_base_url(('api/' . $request->getLocale() ?? 'en') . (($url !== '') ? '/' . $url : ''));
     }
 }
+if (!function_exists('asset_url')) {
+    function asset_url($url = '')
+    {
+        return base_url('assets/' . $url);
+    }
+}
+if (!function_exists('base_locale_url')) {
+    function base_locale_url($url = '')
+    {
+        $request = service('request');
+        return base_url(('' . $request->getLocale() ?? 'en') . (($url !== '') ? '/' . $url : ''));
+    }
+}
+if (!function_exists('web_url')) {
+    function web_url($url = '')
+    {
+        $request = service('request');
+        return base_url(('web/' . $request->getLocale() ?? 'en') . (($url !== '') ? '/' . $url : ''));
+    }
+}
+if (!function_exists('api_url')) {
+    function api_url($url = '')
+    {
+        $request = service('request');
+        return base_url(('api/' . $request->getLocale() ?? 'en') . (($url !== '') ? '/' . $url : ''));
+    }
+}
+
+
 if (!function_exists('herauth_set_locale')) {
     function herauth_set_locale($locale)
     {
