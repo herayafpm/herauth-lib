@@ -1,6 +1,6 @@
 <?php
 $routes->group('auth', function ($routes) {
-    $routes->post('login', 'Auth::login');
+    $routes->post('login', 'HeraAuth::login');
 });
 $routes->setDefaultNamespace('Raydragneel\HerauthLib\Controllers\Api\Master');
 $routes->group('master', ['filter' => 'auth_api_filter'], function ($routes) {
