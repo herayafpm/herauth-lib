@@ -14,13 +14,10 @@ $routes->group('herauth',function($routes){
     $routes->group('api/{locale}', function ($routes) {
         require __DIR__.'./Routes/ApiRoutes.php';
     });
-    $routes->setPrioritize(false);
     $routes->setDefaultNamespace('Raydragneel\HerauthLib\Controllers');
     $routes->group('', function ($routes) {
         $routes->get('assets/(:any)','HeraAssets::file/$1');
-        $routes->setPrioritize();
-        $routes->get('', 'HeraHome::redirLocale',['priority' => 99]);
-        $routes->setPrioritize(false);
+        $routes->get('', 'HeraHome::redirLocale',['priority' => 1]);
         $routes->group('{locale}', ['filter' => 'auth_filter'], function ($routes) {
             $routes->get('logout','HeraAuth::logout');
             $routes->get('login','HeraAuth::login');
