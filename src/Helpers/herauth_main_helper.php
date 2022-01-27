@@ -158,8 +158,10 @@ if (!function_exists('herauth_grant')) {
             $after_request_filter->after($request, $response);
             $configHerauth = config("Herauth");
             echo view($configHerauth->unauthorizedPageView);
-        } else {
+        } else if($type === 'api') {
             $after_request_filter->after($request, $response)->send();
+        }else{
+            return false;
         }
         die();
     }
