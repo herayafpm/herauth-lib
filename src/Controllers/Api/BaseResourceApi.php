@@ -31,6 +31,9 @@ class BaseResourceApi extends ResourceController
         if ($this->jenis_akses === 'web') {
             $this->session = session();
             if($this->session->has('username')){
+                if($this->session->has('modelName')){
+                    $admin_model = model($this->session->get('modelName'));
+                }
                 $_user = $admin_model->cekUser($this->session->get('username'));
                 $request->_user = $_user;
                 $this->__user = $_user;
