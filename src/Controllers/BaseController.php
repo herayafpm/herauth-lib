@@ -67,7 +67,11 @@ class BaseController extends Controller
         // $this->data['_web_url'] = str_replace($request->uri->getScheme()."://",'',base_url());
 
         if($this->session->has('username')){
-            $admin_model = model(AdminModel::class);
+            if($this->session->has('modelName')){
+                $admin_model = model($this->session->get('modelName'));
+            }else{
+                $admin_model = model(AdminModel::class);
+            }
             $user = $admin_model->cekUser($this->session->get('username'));
             $request->_user = $user;
             $this->_user = $user;
