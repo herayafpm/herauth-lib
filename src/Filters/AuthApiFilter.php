@@ -47,6 +47,7 @@ class AuthApiFilter implements FilterInterface
                     }
                     $jwt = ClaJWT::decode($userKey[1]);
                     $request->__username = $jwt->username;
+                    $request->__model = base64_decode($jwt->model ?? '');
                 }
             }
         } catch (\UnexpectedValueException $th) {

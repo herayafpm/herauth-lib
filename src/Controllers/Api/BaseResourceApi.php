@@ -40,6 +40,11 @@ class BaseResourceApi extends ResourceController
             }
         }else{
             if($request->__username ?? '' !== ''){
+                if(isset($request->__model)){
+                    if(!empty($request->__model ?? '')){
+                        $admin_model = model($request->__model);
+                    }
+                }
                 $_user = $admin_model->cekUser($request->__username);
                 $request->_user = $_user;
                 $this->__user = $_user;
