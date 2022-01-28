@@ -69,7 +69,7 @@ class HeraAuth extends BaseResourceApi
                 $this->session->set($ses);
                 $data_res['redir'] = herauth_base_url("");
             } else if ($this->jenis_akses === 'api') {
-                $jwt = ClaJWT::encode(['username' => $username,'model' => base64_encode(ClaEncrypter::encrypt(AdminModel::class))], null, false, false);
+                $jwt = ClaJWT::encode(['username' => $username,'model' => ClaEncrypter::encrypt(AdminModel::class)], null, false, false);
                 if ($jwt) {
                     $data_res = $jwt;
                 }
