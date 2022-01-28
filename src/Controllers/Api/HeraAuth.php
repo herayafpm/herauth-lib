@@ -5,6 +5,7 @@ namespace Raydragneel\HerauthLib\Controllers\Api;
 use DomainException;
 use Config\Services;
 use Raydragneel\HerauthLib\Entities\AdminEntity;
+use Raydragneel\HerauthLib\Libraries\ClaEncrypter;
 use Raydragneel\HerauthLib\Libraries\ClaJWT;
 use Raydragneel\HerauthLib\Models\AdminModel;
 
@@ -68,7 +69,7 @@ class HeraAuth extends BaseResourceApi
                 $this->session->set($ses);
                 $data_res['redir'] = herauth_base_url("");
             } else if ($this->jenis_akses === 'api') {
-                $jwt = ClaJWT::encode(['username' => $username,'model' => base64_encode(AdminModel::class)], null, false, false);
+                $jwt = ClaJWT::encode(['username' => $username,'model' => ClaEncrypter::encrypt(base64_encode(AdminModel::class))], null, false, false);
                 if ($jwt) {
                     $data_res = $jwt;
                 }

@@ -6,6 +6,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
 use DomainException;
+use Raydragneel\HerauthLib\Libraries\ClaEncrypter;
 use Raydragneel\HerauthLib\Libraries\ClaJWT;
 use Raydragneel\HerauthLib\Models\ClientModel;
 
@@ -47,7 +48,7 @@ class AuthApiFilter implements FilterInterface
                     }
                     $jwt = ClaJWT::decode($userKey[1]);
                     $request->__username = $jwt->username;
-                    $request->__model = base64_decode($jwt->model ?? '');
+                    $request->__model = ClaEncrypter::decrypt(base64_decode($jwt->model ?? ''));
                 }
             }
         } catch (\UnexpectedValueException $th) {
