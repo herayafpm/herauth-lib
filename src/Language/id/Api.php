@@ -17,6 +17,8 @@ return [
     'failDeleteRequest' => 'Gagal menghapus {0}',
     'successRestoreRequest' => 'Berhasil mengembalikan {0}',
     'failRestoreRequest' => 'Gagal mengembalikan {0}',
+    'successActivateRequest' => 'Berhasil mengaktifkan {0}',
+    'failActivateRequest' => 'Gagal mengaktifkan {0}',
     'successRegenerateKeyRequest' => 'Berhasil meregenerate key {0}',
     'failRegenerateKeyRequest' => 'Gagal meregenerate key {0}',
     'successPurgeRequest' => 'Berhasil menghapus {0} selamanya',
