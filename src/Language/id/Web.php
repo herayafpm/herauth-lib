@@ -41,4 +41,5 @@ return [
         'android' => 'Android',
         'ios' => 'IOS'
     ],
+    'setting' => 'Pengaturan'
 ];
