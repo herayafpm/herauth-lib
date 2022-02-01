@@ -9,10 +9,10 @@ $routes->group('herauth',function($routes){
     $routes->setDefaultNamespace('Raydragneel\HerauthLib\Controllers\Api');
     $routes->setPrioritize(true);
     $routes->group('web/{locale}', function ($routes) {
-        require __DIR__.'./Routes/ApiRoutes.php';
+        require __DIR__.'/Routes/ApiRoutes.php';
     });
     $routes->group('api/{locale}', function ($routes) {
-        require __DIR__.'./Routes/ApiRoutes.php';
+        require __DIR__.'/Routes/ApiRoutes.php';
     });
     $routes->setDefaultNamespace('Raydragneel\HerauthLib\Controllers');
     $routes->group('', function ($routes) {
