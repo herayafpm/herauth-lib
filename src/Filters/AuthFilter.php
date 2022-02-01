@@ -12,7 +12,7 @@ class AuthFilter implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         helper('herauth_main');
-        $config = config('herauth');
+        $config = config('Herauth');
         $segments = $request->uri->getSegments();
         try {
             $session = service('session');
